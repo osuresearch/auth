@@ -26,7 +26,7 @@ const Profile: React.FC<Props> = ({ editUrl = '/register', children }) => {
             <a href="#" className="dropdown-toggle"
                 id="profile-dropdown" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                {user.name}
+                {user.username}
             </a>
             <div className="dropdown-menu dropdown-menu-right" aria-labelledby="profile-dropdown">
                 <a className="dropdown-item" href={editUrl}>

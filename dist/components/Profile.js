@@ -34,7 +34,7 @@ var Profile = function Profile(_ref) {
     "data-toggle": "dropdown",
     "aria-haspopup": "true",
     "aria-expanded": "false"
-  }, user.name), /*#__PURE__*/_react.default.createElement("div", {
+  }, user.username), /*#__PURE__*/_react.default.createElement("div", {
     className: "dropdown-menu dropdown-menu-right",
     "aria-labelledby": "profile-dropdown"
   }, /*#__PURE__*/_react.default.createElement("a", {
