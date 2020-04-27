@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "build:components": "npx babel ./src --out-dir ./dist --extensions \".tsx,.js\"",
+    "build:components": "npx babel ./src --out-dir ./dist --extensions \".tsx,.ts\"",
     "build:ts-declarations": "npx tsc --declaration --outDir ./dist --emitDeclarationOnly --declarationMap || echo tsc done, possibly with ignored errors.",
     "build": "npm-run-all --parallel build:components build:ts-declarations",
     "test": "react-scripts test"
