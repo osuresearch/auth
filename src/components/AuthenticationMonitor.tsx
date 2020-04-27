@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { ConnectionState } from '../types';
 import useIdentity from '../hooks/useIdentity';
 
-import Modal from './Modal';
+import Modal from '../internal/Modal';
 import { basepath } from '../utility';
 
 export interface Props {
