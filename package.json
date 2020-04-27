@@ -1,0 +1,72 @@
+{
+  "name": "@oris/auth",
+  "version": "1.0.0",
+  "description": "React components for authentication and authorization",
+  "author": "Chase McManning <mcmanning.1@osu.edu>",
+  "private": true,
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:components": "npx babel ./src --out-dir ./dist --extensions \".tsx,.js\"",
+    "build:ts-declarations": "npx tsc --declaration --outDir ./dist --emitDeclarationOnly --declarationMap || echo tsc done, possibly with ignored errors.",
+    "build": "npm-run-all --parallel build:components build:ts-declarations",
+    "test": "react-scripts test"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0",
+    "react-router-dom": ">=5.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/plugin-transform-typescript": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.7",
+    "@babel/register": "^7.7.7",
+    "@oris/ui": "git+ssh://git@code.osu.edu:ORIS/ui.git#semver:^4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.4.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^12.12.22",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "acorn": "^6.4.0",
+    "node-sass": "^4.13.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.3.1",
+    "react-docgen-typescript": "^1.16.2",
+    "react-styleguidist": "^10.4.0",
+    "typescript": "^3.7.4"
+  },
+  "//devDependencies": {
+    "@babel/*": "Build dist/* files for usage through npm imports",
+    "acorn": "Forced upgraded version to help resolved a bug in Styleguidist",
+    "npm-run-all": "Parallel/Serial process runner for npm run commands",
+    "react-styleguidist": "Styleguide build and local development support"
+  }
+}
