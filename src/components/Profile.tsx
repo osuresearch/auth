@@ -1,5 +1,7 @@
 
 import React from 'react';
+
+import EmulationModal from '../components/EmulationModal';
 import useIdentity from '../hooks/useIdentity';
 
 export interface Props {
@@ -36,6 +38,8 @@ const Profile: React.FC<Props> = ({ editUrl = '/register', children }) => {
                 {children}
 
                 <div className="dropdown-divider"></div>
+
+                <EmulationModal className="dropdown-item" />
                 <button className="dropdown-item profile-logout" onClick={logout}>Logout</button>
             </div>
         </div>
