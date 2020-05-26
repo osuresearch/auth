@@ -2,31 +2,25 @@
 import React, { createRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-export interface Props {
-    keyboard?: boolean;
-    backdrop?: string;
-}
-
 /**
  * Wrapper around Bootstrap 4 Modals
  */
-const Modal: React.FC<Props> = ({ keyboard, backdrop, children }) => {
+const Modal: React.FC = ({ children }) => {
     const ref = createRef<HTMLDivElement>();
-
-    // window.$(this.ref.current).modal('hide');
 
     useEffect(() => {
         // @ts-ignore 
         window.$(ref.current).modal({
-            keyboard,
-            backdrop
+            // Disable the user's ability to close this modal
+            keyboard: false,
+            backdrop: 'static'
         });
 
         return () => {
             // @ts-ignore
             window.$(ref.current).modal('hide');
         }
-    }, [ref, keyboard, backdrop]);
+    }, [ref]);
 
     return createPortal(
         <div className="modal fade" tabIndex={-1} role="dialog"
