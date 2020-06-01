@@ -1,7 +1,7 @@
 
 import { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
-import { basepath } from '../utility';
+import { basepath } from '../internal/utility';
 
 /**
  * Emulation query and control

@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import AuthContext, { AuthContextState } from '../context/AuthContext';
 import { Identity, ConnectionState } from '../types';
-import ping from '../ping';
-import { basepath } from '../utility';
+import ping from '../internal/ping';
+import { basepath } from '../internal/utility';
 
 export interface Props {
     /**

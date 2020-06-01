@@ -1,5 +1,5 @@
 
-import { ConnectionState, Identity, IdentityJsonApiResponse } from './types';
+import { ConnectionState, Identity, IdentityJsonApiResponse } from '../types';
 
 /**
  * Check our connection state and get updated IdM information, if possible.

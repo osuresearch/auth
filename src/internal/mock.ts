@@ -1,5 +1,5 @@
 
-import { Identity } from './types';
+import { Identity } from '../types';
 
 export function getMockIdentity(): Identity {
     return {
