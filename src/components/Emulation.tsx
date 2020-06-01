@@ -1,14 +1,14 @@
 
 import React, { useState } from 'react';
 
-import Modal from '../internal/Modal';
-import useIdentity from '../hooks/useIdentity';
-import useEmulation from '../hooks/useEmulation';
-
 // PersonSearchResult is missing from the index.d.ts file for oris/ui
 // This will eventually be fixed once the UI project moves to Typescript.
 // @ts-ignore
 import { Search, PersonSearchResult } from '@oris/ui';
+
+import useIdentity from '../hooks/useIdentity';
+import useEmulation from '../hooks/useEmulation';
+import Modal from '../internal/Modal';
 
 export interface Props {
     /**
@@ -67,7 +67,7 @@ function addToEmulationHistory(localStorageKey: string, value: EmulationHistoryD
     window.localStorage.setItem(localStorageKey, JSON.stringify(people));
 }
 
-const EmulationModal: React.FC<Props> = ({
+const Emulation: React.FC<Props> = ({
     lookupEndpoint = 'https://orapps.osu.edu/api/v1/person',
     localStorageKey = 'emulation-history',
     className = 'btn btn-danger'
@@ -94,15 +94,21 @@ const EmulationModal: React.FC<Props> = ({
 
     const onClearEmulation = () => emulate();
 
-    const onClick = () => setShowModal(true);
-
     // If emulation isn't available, just don't render anything at all.
     if (!allowed) return null;
 
+    // Can't nest Modal inside of button - the button's onClick will fire
+    // when anything is clicked in the modal - causing showModal to always be true.
     return (
     <>
-        {showModal && 
-        <Modal>
+        <button className={className} onClick={() => setShowModal(true)}>
+            Emulate
+        </button>
+
+        <Modal title="Emulate" 
+            isOpen={showModal} 
+            onRequestClose={() => setShowModal(false)}
+        >
             <div className="modal-body">
                 <Search
                     name="emulate-user-lookup"
@@ -132,17 +138,8 @@ const EmulationModal: React.FC<Props> = ({
                 </div>
             </div>
         </Modal>
-        }
-
-        <button
-            type="button"
-            className={className}
-            onClick={onClick}
-        >
-            Emulate
-        </button>
     </>
     );
 }
 
-export default EmulationModal;
+export default Emulation;

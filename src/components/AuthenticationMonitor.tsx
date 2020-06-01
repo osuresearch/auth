@@ -4,7 +4,7 @@ import { ConnectionState } from '../types';
 import useIdentity from '../hooks/useIdentity';
 
 import Modal from '../internal/Modal';
-import { basepath } from '../utility';
+import { basepath } from '../internal/utility';
 
 export interface Props {
     /**
@@ -33,13 +33,13 @@ const AuthenticationMonitor: React.FC<Props> = ({
 }) => {
     const { state, verifyLogin } = useIdentity();
     const [showModal, setShowModal] = useState(false);
-    const [loginWindow, setLoginWindow] = useState<Window | null>(null);
+    const [loginWindow, setLoginWindow] = useState<Window>();
 
     // Displays the login modal the moment the user is no longer logged in.
     // This will fire a verifyLogin() that will close the modal once they
     // have logged back into the application.
     useEffect(() => {
-        console.debug('[LoginDialog] Effect', state);
+        console.debug('[AuthenticationMonitor] Effect', state);
 
         if (state === ConnectionState.NOT_LOGGED_IN) {
             // Component is configured not to prompt for login, just redirect them.
@@ -58,10 +58,10 @@ const AuthenticationMonitor: React.FC<Props> = ({
     // When the loginWindow popup is open, monitor the status on
     // an interval. Once it's closed, clear our reference to it.
     useEffect(() => {
-        console.debug('[LoginDialog] Window ref changed', loginWindow);
+        console.debug('[AuthenticationMonitor] Window ref changed', loginWindow);
         const handle = setInterval(() => {
             if (loginWindow && loginWindow.closed) {
-                setLoginWindow(null);
+                setLoginWindow(undefined);
             }
         }, 800);
 
@@ -84,17 +84,13 @@ const AuthenticationMonitor: React.FC<Props> = ({
         );
 
         // TODO: Handle null retval. Popup blocker?
-        setLoginWindow(newWindow);
+        setLoginWindow(newWindow || undefined);
     }
 
     const isLoginWindowOpen = loginWindow && !loginWindow.closed;
 
-    if (!showModal) {
-        return null;
-    }
-
     return (
-        <Modal backdrop="static" keyboard={false}>
+        <Modal title="Session Expired" isOpen={showModal} hasCloseButton={false}>
             <div className="modal-body">
                 <p>Your session has expired and you have been logged out.</p>
 
