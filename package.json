@@ -1,6 +1,6 @@
 {
   "name": "@oris/auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React components for authentication and authorization",
   "author": "Chase McManning <mcmanning.1@osu.edu>",
   "private": true,
