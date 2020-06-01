@@ -9,6 +9,8 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _Emulation = _interopRequireDefault(require("./Emulation"));
+
 var _useIdentity2 = _interopRequireDefault(require("../hooks/useIdentity"));
 
 var Profile = function Profile(_ref) {
@@ -42,6 +44,8 @@ var Profile = function Profile(_ref) {
     href: editUrl
   }, "My Profile"), children, /*#__PURE__*/_react.default.createElement("div", {
     className: "dropdown-divider"
+  }), /*#__PURE__*/_react.default.createElement(_Emulation.default, {
+    className: "dropdown-item"
   }), /*#__PURE__*/_react.default.createElement("button", {
     className: "dropdown-item profile-logout",
     onClick: logout

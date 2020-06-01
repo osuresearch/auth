@@ -19,7 +19,7 @@ var _useIdentity2 = _interopRequireDefault(require("../hooks/useIdentity"));
 
 var _Modal = _interopRequireDefault(require("../internal/Modal"));
 
-var _utility = require("../utility");
+var _utility = require("../internal/utility");
 
 ;
 /**
@@ -44,7 +44,7 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
       showModal = _useState2[0],
       setShowModal = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(null),
+  var _useState3 = (0, _react.useState)(),
       _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
       loginWindow = _useState4[0],
       setLoginWindow = _useState4[1]; // Displays the login modal the moment the user is no longer logged in.
@@ -53,7 +53,7 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
 
 
   (0, _react.useEffect)(function () {
-    console.debug('[LoginDialog] Effect', state);
+    console.debug('[AuthenticationMonitor] Effect', state);
 
     if (state === _types.ConnectionState.NOT_LOGGED_IN) {
       // Component is configured not to prompt for login, just redirect them.
@@ -73,10 +73,10 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
   // an interval. Once it's closed, clear our reference to it.
 
   (0, _react.useEffect)(function () {
-    console.debug('[LoginDialog] Window ref changed', loginWindow);
+    console.debug('[AuthenticationMonitor] Window ref changed', loginWindow);
     var handle = setInterval(function () {
       if (loginWindow && loginWindow.closed) {
-        setLoginWindow(null);
+        setLoginWindow(undefined);
       }
     }, 800);
     return function () {
@@ -94,18 +94,14 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
 
     var newWindow = window.open(loginUrl, 'Login', 'width=800,height=600'); // TODO: Handle null retval. Popup blocker?
 
-    setLoginWindow(newWindow);
+    setLoginWindow(newWindow || undefined);
   };
 
   var isLoginWindowOpen = loginWindow && !loginWindow.closed;
-
-  if (!showModal) {
-    return null;
-  }
-
   return /*#__PURE__*/_react.default.createElement(_Modal.default, {
-    backdrop: "static",
-    keyboard: false
+    title: "Session Expired",
+    isOpen: showModal,
+    hasCloseButton: false
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: "modal-body"
   }, /*#__PURE__*/_react.default.createElement("p", null, "Your session has expired and you have been logged out."), /*#__PURE__*/_react.default.createElement("p", null, "To avoid losing any unsaved work, click the ", /*#__PURE__*/_react.default.createElement("strong", null, "Login"), " button below to log back into the application.")), /*#__PURE__*/_react.default.createElement("div", {

@@ -21,9 +21,9 @@ var _AuthContext = _interopRequireDefault(require("../context/AuthContext"));
 
 var _types = require("../types");
 
-var _ping = _interopRequireDefault(require("../ping"));
+var _ping = _interopRequireDefault(require("../internal/ping"));
 
-var _utility = require("../utility");
+var _utility = require("../internal/utility");
 
 ;
 /** How frequent to ping the identity endpoint for an update while logged in */

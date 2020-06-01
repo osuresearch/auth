@@ -15,7 +15,7 @@ var _react = require("react");
 
 var _AuthContext = _interopRequireDefault(require("../context/AuthContext"));
 
-var _utility = require("../utility");
+var _utility = require("../internal/utility");
 
 /**
  * Emulation query and control
