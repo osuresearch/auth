@@ -39,23 +39,9 @@ export interface Identity {
     permissions: Permission[];
 };
 
-/** Payload from a JSON:API IdM endpoint */
-export interface IdentityJsonApiResponse {
-    id: string;
-    type: string;
-    attributes: {
-        username: string;
-        email: string;
-        name: string;
-            
-        /**
-         * Active application permissions
-         */
-        permissions: Permission[];
-            
-        emulation: {
-            active: boolean;
-            allowed: boolean;
-        }
-    }
+/**
+ * Interface for the translation layer between the backend API and frontend models.
+ */
+export interface ApiAdapter {
+    refreshIdentity(): Promise<[ConnectionState, Identity|undefined]>;
 };

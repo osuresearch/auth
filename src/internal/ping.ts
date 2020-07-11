@@ -1,49 +1,16 @@
 
-import { ConnectionState, Identity, IdentityJsonApiResponse } from '../types';
+import { ConnectionState, Identity, ApiAdapter } from '../types';
 
 /**
  * Check our connection state and get updated IdM information, if possible.
  * 
  * @return {Promise} Current connection state and updated IdM information, if connected
  */
-async function ping(identityEndpoint: string, publicTestUrl: string): Promise<[ConnectionState, Identity|undefined]> {
+async function ping(adapter: ApiAdapter, publicTestUrl: string): Promise<[ConnectionState, Identity|undefined]> {
     try {
-        console.debug('[ping] GET', identityEndpoint);
-
-        // Grab updated identity information. Non-200 response 
-        // is the assumption that we're no longer authenticated
-        const res = await fetch(identityEndpoint, {
-            cache: 'no-cache',
-            redirect: 'follow',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-
-        const { data } = await res.json();
-
-        // Ensure the payload is not malformed
-        if (typeof data.attributes === 'undefined' || data.type !== 'User') {
-            throw new Error(`Malformed identity API response: ${JSON.stringify(data)}`);
-        }
-
-        const jsonApiIdentity = data as IdentityJsonApiResponse;
-        const identity: Identity = {
-            id: jsonApiIdentity.id,
-            // ...jsonApiIdentity.attributes
-            
-            // Make extractions explicit, otherwise developers may add  
-            // extra stuff that won't be supported in the future AWS-lands.
-            // Making migration that much harder. 
-            name: jsonApiIdentity.attributes.name,
-            username: jsonApiIdentity.attributes.username,
-            email: jsonApiIdentity.attributes.email,
-            permissions: jsonApiIdentity.attributes.permissions,
-            emulation: jsonApiIdentity.attributes.emulation
-        };
-
-        return [ConnectionState.LOGGED_IN, identity];
+        console.debug('[ping] Refresh');
+        const result = await adapter.refreshIdentity();
+        return result;
     } catch (e) {
         console.error('[ping] Not logged in:', e);
     }

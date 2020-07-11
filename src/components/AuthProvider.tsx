@@ -1,17 +1,15 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import AuthContext, { AuthContextState } from '../context/AuthContext';
-import { Identity, ConnectionState } from '../types';
+import { Identity, ConnectionState, ApiAdapter } from '../types';
 import ping from '../internal/ping';
-import { basepath } from '../internal/utility';
+import JsonApiAdapter from '../adapters/JsonApiAdapter';
 
 export interface Props {
     /**
-     * API endpoint to use to retrieve current identity information.
-     * 
-     * Defaults to `/api/user` for the current application
+     * Adapter class type used for translating identity refresh requests from the backend
      */
-    identityEndpoint?: string;
+    adapter?: new () => ApiAdapter;
 
     /**
      * Resource URL on the same host to send a HEAD request to IFF  
@@ -50,7 +48,7 @@ type VerifyLoginResolver = () => void;
  */
 const AuthProvider: React.FC<Props> = ({ 
     children,
-    identityEndpoint = `${basepath()}/api/user`,
+    adapter = JsonApiAdapter,
     publicTestUrl = '/assets/img/osu-footer-wordmark.png',
     logoutUrl = DEFAULT_SSO_LOGOUT_URL
 }) => {
@@ -102,16 +100,17 @@ const AuthProvider: React.FC<Props> = ({
     // Trigger a refresh of our connection state
     const refresh = useCallback(() => {
         console.debug('[AuthProvider:refresh] Refresh');
+        const adapterInstance = new adapter();
 
         setPingActive(prev => {
             if (prev) return prev;
 
-            ping(identityEndpoint, publicTestUrl)
+            ping(adapterInstance, publicTestUrl)
                 .then(resolvePingResponse);
 
             return true;
         });
-    }, [identityEndpoint, publicTestUrl, resolvePingResponse]);
+    }, [adapter, publicTestUrl, resolvePingResponse]);
 
     // Refresh connection information immediately on mount
     useEffect(() => {
