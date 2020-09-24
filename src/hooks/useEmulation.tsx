@@ -7,7 +7,7 @@ import { basepath } from '../internal/utility';
  * Emulation query and control
  */
 function useEmulation() {
-    const { state, user } = useContext(AuthContext);
+    const { state, user, emulate, clearEmulation } = useContext(AuthContext);
 
     if (typeof state === 'undefined') {
         throw new Error(
@@ -19,14 +19,12 @@ function useEmulation() {
     const active = user?.emulation?.active || false;
     const allowed = user?.emulation?.allowed || false;
     
-    const emulate = async (id?: string) => {
-        await fetch(`${basepath()}/api/emulate`, {
-            method: id ? 'POST' : 'DELETE',
-            body: JSON.stringify({ id }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+    const emulateImpl = async (id?: string) => {
+        if (id) {
+            await emulate(id);
+        } else {
+            await clearEmulation();
+        }
 
         window.location.href = basepath();
     };
@@ -34,7 +32,7 @@ function useEmulation() {
     return {
         active,
         allowed,
-        emulate
+        emulate: emulateImpl
     };
 }
 

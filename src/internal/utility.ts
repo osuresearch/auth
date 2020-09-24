@@ -1,4 +1,7 @@
 
+/** Default URL for Shibboleth SSO logouts. May be overridden in the AuthProvider */
+export const DEFAULT_SSO_LOGOUT_URL = '/Shibboleth.sso/Logout?return=https://webauth.service.ohio-state.edu/idp/profile/Logout';
+
 /**
  * Utility function to calculate the basepath of an application.
  * 

@@ -5,6 +5,7 @@ import Profile from './components/Profile';
 import AuthContext from './context/AuthContext';
 import useIdentity from './hooks/useIdentity';
 import useEmulation from './hooks/useEmulation';
+import { ApiDriver } from './types';
 
 export {
     // Components
@@ -17,5 +18,10 @@ export {
 
     // Hooks
     useIdentity,
-    useEmulation
+    useEmulation,
 };
+
+export type {
+    // Interfaces
+    ApiDriver,
+}

@@ -8,9 +8,12 @@ export interface AuthContextState {
     logout(): void;
     verifyLogin(): Promise<any>;
 
+    emulate(id: string): Promise<any>;
+    clearEmulation(): Promise<any>;
+
     state: ConnectionState;
 };
 
-const AuthContext = createContext<Partial<AuthContextState>>({});
+const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 
 export default AuthContext;

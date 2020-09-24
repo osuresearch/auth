@@ -15,6 +15,8 @@ export enum ConnectionState {
 
 export type Permission = string;
 
+export type Policy = string;
+
 /**
  * Identity information 
  */
@@ -37,11 +39,15 @@ export interface Identity {
     }
 
     permissions: Permission[];
+
+    policies: Policy[];
 };
 
 /**
  * Interface for the translation layer between the backend API and frontend models.
  */
-export interface ApiAdapter {
+export interface ApiDriver {
     refreshIdentity(): Promise<[ConnectionState, Identity|undefined]>;
+    emulate(id: string): Promise<void>;
+    clearEmulation(): Promise<void>;
 };

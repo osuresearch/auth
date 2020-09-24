@@ -1,6 +1,6 @@
 
-import { ApiAdapter, ConnectionState, Identity, Permission } from '../types';
 import { basepath } from '../internal/utility';
+import { ApiDriver, ConnectionState, Identity, Permission } from '../types';
 
 /** Payload from a JSON:API IdM endpoint */
 interface IdentityJsonApiResponse {
@@ -23,14 +23,23 @@ interface IdentityJsonApiResponse {
     }
 };
 
-export default class JsonApiAdapter implements ApiAdapter
+/**
+ * Driver that communicates with a standard JSON:API backend.
+ */
+class JsonApiDriver implements ApiDriver
 {
-    static API_ENDPOINT = `${basepath()}/api/user`;
+    private endpoint: string;
+    private emulateEndpoint: string;
+
+    public constructor(endpoint: string, emulateEndpoint: string) {
+        this.endpoint = endpoint;
+        this.emulateEndpoint = emulateEndpoint;
+    }
 
     public async refreshIdentity(): Promise<[ConnectionState, Identity]> {
         // Grab updated identity information. Non-200 response 
         // is the assumption that we're no longer authenticated
-        const res = await fetch(JsonApiAdapter.API_ENDPOINT, {
+        const res = await fetch(this.endpoint, {
             cache: 'no-cache',
             redirect: 'follow',
             credentials: 'same-origin',
@@ -58,9 +67,38 @@ export default class JsonApiAdapter implements ApiAdapter
             username: jsonApiIdentity.attributes.username,
             email: jsonApiIdentity.attributes.email,
             permissions: jsonApiIdentity.attributes.permissions,
-            emulation: jsonApiIdentity.attributes.emulation
+            emulation: jsonApiIdentity.attributes.emulation,
+
+            // Policies are currently not supported by JSON:API.
+            policies: [] 
         };
 
         return [ConnectionState.LOGGED_IN, identity];
     }
+
+    public async emulate(id: string): Promise<void> {
+        await fetch(this.emulateEndpoint, {
+            method: 'POST',
+            body: JSON.stringify({ id }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+    
+    public async clearEmulation(): Promise<void> {
+        await fetch(this.emulateEndpoint, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+}
+
+export default function JsonApi(
+    endpoint: string = `${basepath()}/api/user`,
+    emulateEndpoint: string = `${basepath()}/api/emulate`
+) {
+    return new JsonApiDriver(endpoint, emulateEndpoint);
 }

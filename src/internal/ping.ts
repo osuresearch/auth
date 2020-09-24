@@ -1,15 +1,15 @@
 
-import { ConnectionState, Identity, ApiAdapter } from '../types';
+import { ConnectionState, Identity, ApiDriver } from '../types';
 
 /**
  * Check our connection state and get updated IdM information, if possible.
  * 
  * @return {Promise} Current connection state and updated IdM information, if connected
  */
-async function ping(adapter: ApiAdapter, publicTestUrl: string): Promise<[ConnectionState, Identity|undefined]> {
+async function ping(driver: ApiDriver, publicTestUrl: string): Promise<[ConnectionState, Identity|undefined]> {
     try {
         console.debug('[ping] Refresh');
-        const result = await adapter.refreshIdentity();
+        const result = await driver.refreshIdentity();
         return result;
     } catch (e) {
         console.error('[ping] Not logged in:', e);

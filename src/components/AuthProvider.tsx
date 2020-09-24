@@ -1,15 +1,15 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import AuthContext, { AuthContextState } from '../context/AuthContext';
-import { Identity, ConnectionState, ApiAdapter } from '../types';
+import { Identity, ConnectionState, ApiDriver } from '../types';
 import ping from '../internal/ping';
-import JsonApiAdapter from '../adapters/JsonApiAdapter';
+import { DEFAULT_SSO_LOGOUT_URL } from '../internal/utility';
 
 export interface Props {
     /**
-     * Adapter class type used for translating identity refresh requests from the backend
+     * Driver class type used for translating identity refresh requests from the backend
      */
-    adapter?: new () => ApiAdapter;
+    driver: ApiDriver;
 
     /**
      * Resource URL on the same host to send a HEAD request to IFF  
@@ -33,9 +33,6 @@ const DEFAULT_PING_INTERVAL = 300 * 1000; // 5 minutes
 /** How frequent to ping the identity endpoint for an update while NOT logged in */
 const ACTIVE_PING_INTERVAL = 5000; // 5 seconds
 
-/** Default URL for Shibboleth SSO logouts. May be overridden in the AuthProvider */
-const DEFAULT_SSO_LOGOUT_URL = '/Shibboleth.sso/Logout?return=https://webauth.service.ohio-state.edu/idp/profile/Logout';
-
 /** Safe typing for setResolver() */
 type VerifyLoginResolver = () => void;
 
@@ -48,7 +45,7 @@ type VerifyLoginResolver = () => void;
  */
 const AuthProvider: React.FC<Props> = ({ 
     children,
-    adapter = JsonApiAdapter,
+    driver,
     publicTestUrl = '/assets/img/osu-footer-wordmark.png',
     logoutUrl = DEFAULT_SSO_LOGOUT_URL
 }) => {
@@ -71,7 +68,7 @@ const AuthProvider: React.FC<Props> = ({
 
     // Track whether a ping is currently in progress
     const [, setPingActive] = useState(false);
-
+    
     const resolvePingResponse = useCallback((res: [ConnectionState, Identity | undefined]) => {
         console.debug('[AuthProvider:resolvePingResponse] Resolve ping to state', res[0]);
 
@@ -100,17 +97,16 @@ const AuthProvider: React.FC<Props> = ({
     // Trigger a refresh of our connection state
     const refresh = useCallback(() => {
         console.debug('[AuthProvider:refresh] Refresh');
-        const adapterInstance = new adapter();
 
         setPingActive(prev => {
             if (prev) return prev;
 
-            ping(adapterInstance, publicTestUrl)
+            ping(driver, publicTestUrl)
                 .then(resolvePingResponse);
 
             return true;
         });
-    }, [adapter, publicTestUrl, resolvePingResponse]);
+    }, [driver, publicTestUrl, resolvePingResponse]);
 
     // Refresh connection information immediately on mount
     useEffect(() => {
@@ -173,6 +169,8 @@ const AuthProvider: React.FC<Props> = ({
         user,
         verifyLogin,
         logout,
+        emulate: driver.emulate.bind(driver),
+        clearEmulation: driver.clearEmulation.bind(driver),
         state
     };
 
