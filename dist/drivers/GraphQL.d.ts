@@ -1,5 +1,5 @@
-import { ApiDriver, ConnectionState, Identity } from '../types';
-declare class GraphQLDriver implements ApiDriver {
+import { IDriver, ConnectionState, Identity } from '../types';
+declare class GraphQLDriver implements IDriver {
     private endpoint;
     constructor(endpoint: string);
     refreshIdentity(): Promise<[ConnectionState, Identity]>;

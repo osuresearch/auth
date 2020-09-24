@@ -22,18 +22,9 @@ var _ = require("..");
  */
 var Can = function Can(props) {
   var _useIdentity = (0, _.useIdentity)(),
-      user = _useIdentity.user;
+      can = _useIdentity.can;
 
-  var allowed = false;
-
-  if (typeof props.on !== 'undefined') {
-    allowed = props.on.policies.indexOf(props.do) >= 0;
-  } else if (user) {
-    // TODO: policies in @oris/auth user model. For now, we unsafely hack it in.
-    allowed = user.permissions.indexOf(props.do) >= 0 || user.policies.indexOf(props.do) >= 0;
-  }
-
-  if (!allowed) {
+  if (!can(props.do, props.on)) {
     return null;
   }
 

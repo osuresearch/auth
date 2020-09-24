@@ -1,6 +1,6 @@
 
 import { basepath } from '../internal/utility';
-import { ApiDriver, ConnectionState, Identity, Permission } from '../types';
+import { IDriver, ConnectionState, Identity, Permission } from '../types';
 
 /** Payload from a JSON:API IdM endpoint */
 interface IdentityJsonApiResponse {
@@ -26,7 +26,7 @@ interface IdentityJsonApiResponse {
 /**
  * Driver that communicates with a standard JSON:API backend.
  */
-class JsonApiDriver implements ApiDriver
+class JsonApiDriver implements IDriver
 {
     private endpoint: string;
     private emulateEndpoint: string;

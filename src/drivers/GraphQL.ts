@@ -1,6 +1,6 @@
 
 import { basepath } from '../internal/utility';
-import { ApiDriver, ConnectionState, Identity, Permission, Policy } from '../types';
+import { IDriver, ConnectionState, Identity, Permission, Policy } from '../types';
 
 interface GraphQLAuthResponse {
     me: {
@@ -19,7 +19,7 @@ interface GraphQLAuthResponse {
     }
 };
 
-class GraphQLDriver implements ApiDriver
+class GraphQLDriver implements IDriver
 {
     private endpoint: string;
 

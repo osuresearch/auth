@@ -26,13 +26,29 @@ function useIdentity() {
   if (typeof verifyLogin === 'undefined' || typeof logout === 'undefined') {
     throw new Error('Cannot call `useIdentity` outside an IdM context. ' + 'Are you calling it from outside an AuthProvider?');
   }
+  /**
+   * Can the user perform the given action on some context (or globally)
+   */
 
+
+  var can = (0, _react.useCallback)(function (action, on) {
+    var allowed = false;
+
+    if (typeof on !== 'undefined') {
+      allowed = on.policies.indexOf(action) >= 0;
+    } else if (user) {
+      allowed = user.permissions.indexOf(action) >= 0 || user.policies.indexOf(action) >= 0;
+    }
+
+    return allowed;
+  }, [user]);
   return {
     user: user,
     state: state || _types.ConnectionState.UNKNOWN,
     permissions: new Set((user === null || user === void 0 ? void 0 : user.permissions) || []),
     verifyLogin: verifyLogin,
-    logout: logout
+    logout: logout,
+    can: can
   };
 }
 

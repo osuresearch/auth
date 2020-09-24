@@ -1,10 +1,5 @@
 import React from 'react';
-/**
- * Interface for an object that contains one or more attached policies
- */
-interface IHasPolicies {
-    policies: string[];
-}
+import { IHasPolicies } from '../types';
 declare type Props = {
     /**
      * The policy or permission name to test against

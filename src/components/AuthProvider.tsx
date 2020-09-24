@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import AuthContext, { AuthContextState } from '../context/AuthContext';
-import { Identity, ConnectionState, ApiDriver } from '../types';
+import { Identity, ConnectionState, IDriver } from '../types';
 import ping from '../internal/ping';
 import { DEFAULT_SSO_LOGOUT_URL } from '../internal/utility';
 
@@ -9,7 +9,7 @@ export interface Props {
     /**
      * Driver class type used for translating identity refresh requests from the backend
      */
-    driver: ApiDriver;
+    driver: IDriver;
 
     /**
      * Resource URL on the same host to send a HEAD request to IFF  

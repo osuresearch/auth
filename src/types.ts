@@ -18,6 +18,13 @@ export type Permission = string;
 export type Policy = string;
 
 /**
+ * Interface for an object that contains one or more attached policies
+ */
+export interface IHasPolicies {
+    policies: Policy[];
+}
+
+/**
  * Identity information 
  */
 export interface Identity {
@@ -46,7 +53,7 @@ export interface Identity {
 /**
  * Interface for the translation layer between the backend API and frontend models.
  */
-export interface ApiDriver {
+export interface IDriver {
     refreshIdentity(): Promise<[ConnectionState, Identity|undefined]>;
     emulate(id: string): Promise<void>;
     clearEmulation(): Promise<void>;

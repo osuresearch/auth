@@ -6,7 +6,7 @@ import Can from './components/Can';
 import AuthContext from './context/AuthContext';
 import useIdentity from './hooks/useIdentity';
 import useEmulation from './hooks/useEmulation';
-import { ApiDriver } from './types';
+import { IDriver, IHasPolicies } from './types';
 
 export {
     // Components
@@ -25,5 +25,6 @@ export {
 
 export type {
     // Interfaces
-    ApiDriver,
+    IDriver,
+    IHasPolicies,
 }

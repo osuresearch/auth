@@ -1,13 +1,7 @@
 
 import React, { Children } from 'react';
+import { IHasPolicies } from '../types';
 import { useIdentity } from '..';
-
-/**
- * Interface for an object that contains one or more attached policies
- */
-interface IHasPolicies {
-    policies: string[]
-}
 
 type Props = {
     /**
@@ -34,19 +28,9 @@ type Props = {
  * will be checked for a match to `do`.
  */
 const Can: React.FC<Props> = (props)  => {
-    const { user } = useIdentity();
+    const { can } = useIdentity();
 
-    let allowed = false;
-
-    if (typeof props.on !== 'undefined') {
-        allowed = props.on.policies.indexOf(props.do) >= 0;
-    } else if (user) {
-        // TODO: policies in @oris/auth user model. For now, we unsafely hack it in.
-        allowed = user.permissions.indexOf(props.do) >= 0
-                || (user as any as IHasPolicies).policies.indexOf(props.do) >= 0;
-    }
-
-    if (!allowed) {
+    if (!can(props.do, props.on)) {
         return null;
     }
 

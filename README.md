@@ -24,10 +24,11 @@ Wrap your main app with an `AuthProvider` and add an `AuthenticationMonitor` to 
 
 ```jsx
 import { AuthProvider, AuthenticationMonitor } from '@oris/auth';
+import GraphQL from '@oris/auth/dist/drivers/GraphQL';
 
 function App() {
     return (
-        <AuthProvider>
+        <AuthProvider driver={GraphQL()}>
             <AuthenticationMonitor />
             <header>
                 ...
@@ -40,13 +41,13 @@ function App() {
 }
 ```
 
-The `useIdentity` hook can then be used to provide logged in user information:
+The `useIdentity` hook can then be used to provide logged in user information and the `<Can>` component can test for permissions:
 
 ```jsx
-import { useIdentity } from '@oris/auth';
+import { useIdentity, Can } from '@oris/auth';
 
 function MyComponent() {
-    const { user, permissions } = useIdentity();
+    const { user } = useIdentity();
 
     if (!user) {
         return <div>Not logged in</div>;
@@ -56,9 +57,9 @@ function MyComponent() {
         <div>
             <p>Hello {user.name}</p>
 
-            {permissions.has('myapp.can-read-reports') &&
+            <Can do="my-app.read-reports">
                 <Link to="/reports">Read reports</Link>
-            }
+            </Can>
         </div>
     );
 }
