@@ -14,7 +14,7 @@ A backend API is required for user session handling. See the identity and emulat
 ## Installation
 
 ```
-npm install git+ssh://git@code.osu.edu:ORIS/auth.git
+npm install git+ssh://git@code.osu.edu:ORIS/auth.git#semver:^2
 ```
 
 
