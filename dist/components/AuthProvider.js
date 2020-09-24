@@ -34,9 +34,6 @@ var DEFAULT_PING_INTERVAL = 300 * 1000; // 5 minutes
 
 var ACTIVE_PING_INTERVAL = 5000; // 5 seconds
 
-/** Default URL for Shibboleth SSO logouts. May be overridden in the AuthProvider */
-
-var DEFAULT_SSO_LOGOUT_URL = '/Shibboleth.sso/Logout?return=https://webauth.service.ohio-state.edu/idp/profile/Logout';
 /** Safe typing for setResolver() */
 
 /**
@@ -48,12 +45,11 @@ var DEFAULT_SSO_LOGOUT_URL = '/Shibboleth.sso/Logout?return=https://webauth.serv
  */
 var AuthProvider = function AuthProvider(_ref) {
   var children = _ref.children,
-      _ref$identityEndpoint = _ref.identityEndpoint,
-      identityEndpoint = _ref$identityEndpoint === void 0 ? "".concat((0, _utility.basepath)(), "/api/user") : _ref$identityEndpoint,
+      driver = _ref.driver,
       _ref$publicTestUrl = _ref.publicTestUrl,
       publicTestUrl = _ref$publicTestUrl === void 0 ? '/assets/img/osu-footer-wordmark.png' : _ref$publicTestUrl,
       _ref$logoutUrl = _ref.logoutUrl,
-      logoutUrl = _ref$logoutUrl === void 0 ? DEFAULT_SSO_LOGOUT_URL : _ref$logoutUrl;
+      logoutUrl = _ref$logoutUrl === void 0 ? _utility.DEFAULT_SSO_LOGOUT_URL : _ref$logoutUrl;
 
   // Current connection state to the API
   var _useState = (0, _react.useState)(_types.ConnectionState.UNKNOWN),
@@ -118,10 +114,10 @@ var AuthProvider = function AuthProvider(_ref) {
     console.debug('[AuthProvider:refresh] Refresh');
     setPingActive(function (prev) {
       if (prev) return prev;
-      (0, _ping.default)(identityEndpoint, publicTestUrl).then(resolvePingResponse);
+      (0, _ping.default)(driver, publicTestUrl).then(resolvePingResponse);
       return true;
     });
-  }, [identityEndpoint, publicTestUrl, resolvePingResponse]); // Refresh connection information immediately on mount
+  }, [driver, publicTestUrl, resolvePingResponse]); // Refresh connection information immediately on mount
 
   (0, _react.useEffect)(function () {
     refresh();
@@ -197,6 +193,8 @@ var AuthProvider = function AuthProvider(_ref) {
     user: user,
     verifyLogin: verifyLogin,
     logout: logout,
+    emulate: driver.emulate.bind(driver),
+    clearEmulation: driver.clearEmulation.bind(driver),
     state: state
   };
   return /*#__PURE__*/_react.default.createElement(_AuthContext.default.Provider, {

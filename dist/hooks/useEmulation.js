@@ -25,7 +25,9 @@ function useEmulation() {
 
   var _useContext = (0, _react.useContext)(_AuthContext.default),
       state = _useContext.state,
-      user = _useContext.user;
+      user = _useContext.user,
+      emulate = _useContext.emulate,
+      clearEmulation = _useContext.clearEmulation;
 
   if (typeof state === 'undefined') {
     throw new Error('Cannot call `useEmulation` outside an IdM context. ' + 'Are you calling it from outside an AuthProvider?');
@@ -34,27 +36,32 @@ function useEmulation() {
   var active = (user === null || user === void 0 ? void 0 : (_user$emulation = user.emulation) === null || _user$emulation === void 0 ? void 0 : _user$emulation.active) || false;
   var allowed = (user === null || user === void 0 ? void 0 : (_user$emulation2 = user.emulation) === null || _user$emulation2 === void 0 ? void 0 : _user$emulation2.allowed) || false;
 
-  var emulate = /*#__PURE__*/function () {
+  var emulateImpl = /*#__PURE__*/function () {
     var _ref = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee(id) {
       return _regenerator.default.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return fetch("".concat((0, _utility.basepath)(), "/api/emulate"), {
-                method: id ? 'POST' : 'DELETE',
-                body: JSON.stringify({
-                  id: id
-                }),
-                headers: {
-                  'Content-Type': 'application/json'
-                }
-              });
+              if (!id) {
+                _context.next = 5;
+                break;
+              }
 
-            case 2:
-              window.location.href = (0, _utility.basepath)();
+              _context.next = 3;
+              return emulate(id);
 
             case 3:
+              _context.next = 7;
+              break;
+
+            case 5:
+              _context.next = 7;
+              return clearEmulation();
+
+            case 7:
+              window.location.href = (0, _utility.basepath)();
+
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -62,7 +69,7 @@ function useEmulation() {
       }, _callee);
     }));
 
-    return function emulate(_x) {
+    return function emulateImpl(_x) {
       return _ref.apply(this, arguments);
     };
   }();
@@ -70,7 +77,7 @@ function useEmulation() {
   return {
     active: active,
     allowed: allowed,
-    emulate: emulate
+    emulate: emulateImpl
   };
 }
 

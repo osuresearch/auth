@@ -9,6 +9,7 @@ export declare enum ConnectionState {
     NOT_LOGGED_IN = 3
 }
 export declare type Permission = string;
+export declare type Policy = string;
 /**
  * Identity information
  */
@@ -26,23 +27,14 @@ export interface Identity {
         allowed: boolean;
     };
     permissions: Permission[];
+    policies: Policy[];
 }
-/** Payload from a JSON:API IdM endpoint */
-export interface IdentityJsonApiResponse {
-    id: string;
-    type: string;
-    attributes: {
-        username: string;
-        email: string;
-        name: string;
-        /**
-         * Active application permissions
-         */
-        permissions: Permission[];
-        emulation: {
-            active: boolean;
-            allowed: boolean;
-        };
-    };
+/**
+ * Interface for the translation layer between the backend API and frontend models.
+ */
+export interface ApiDriver {
+    refreshIdentity(): Promise<[ConnectionState, Identity | undefined]>;
+    emulate(id: string): Promise<void>;
+    clearEmulation(): Promise<void>;
 }
 //# sourceMappingURL=types.d.ts.map

@@ -1,11 +1,10 @@
 import React from 'react';
+import { ApiDriver } from '../types';
 export interface Props {
     /**
-     * API endpoint to use to retrieve current identity information.
-     *
-     * Defaults to `/api/user` for the current application
+     * Driver class type used for translating identity refresh requests from the backend
      */
-    identityEndpoint?: string;
+    driver: ApiDriver;
     /**
      * Resource URL on the same host to send a HEAD request to IFF
      * the identity endpoint cannot connect. This allows us narrow

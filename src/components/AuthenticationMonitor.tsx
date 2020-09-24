@@ -28,7 +28,7 @@ export interface Props {
  * to avoid losing any unsaved work (This behavior can be disabled via `reloadOnLogout`)
  */
 const AuthenticationMonitor: React.FC<Props> = ({ 
-    reloadOnLogout = false,
+    reloadOnLogout = true,
     loginUrl = `${basepath()}/api/login`
 }) => {
     const { state, verifyLogin } = useIdentity();

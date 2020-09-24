@@ -53,3 +53,5 @@ var _AuthContext = _interopRequireDefault(require("./context/AuthContext"));
 var _useIdentity = _interopRequireDefault(require("./hooks/useIdentity"));
 
 var _useEmulation = _interopRequireDefault(require("./hooks/useEmulation"));
+
+var _types = require("./types");

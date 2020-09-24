@@ -18,6 +18,8 @@ exports.ConnectionState = ConnectionState;
 
 ;
 ;
-/** Payload from a JSON:API IdM endpoint */
+/**
+ * Interface for the translation layer between the backend API and frontend models.
+ */
 
 ;

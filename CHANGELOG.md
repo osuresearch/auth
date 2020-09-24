@@ -12,6 +12,8 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 
 __Backwards Breaking Changes:__
 
+`AuthenticationMonitor.reloadOnLogout` prop has changed from `false` to `true` as a default value. This new default value will force the user to refresh the page fully if their session is invalidated. You must manually specify it to `false` to turn on the popup login dialog feature (Note that the popup feature may not work yet with GraphQL applications).
+
 Breaking changes have been made to how `<AuthProvider>` connects to a backend.
 
 The `identityEndpoint` prop has been replaced with a required `driver` prop.

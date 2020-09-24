@@ -31,7 +31,7 @@ var _utility = require("../internal/utility");
 
 var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
   var _ref$reloadOnLogout = _ref.reloadOnLogout,
-      reloadOnLogout = _ref$reloadOnLogout === void 0 ? false : _ref$reloadOnLogout,
+      reloadOnLogout = _ref$reloadOnLogout === void 0 ? true : _ref$reloadOnLogout,
       _ref$loginUrl = _ref.loginUrl,
       loginUrl = _ref$loginUrl === void 0 ? "".concat((0, _utility.basepath)(), "/api/login") : _ref$loginUrl;
 
