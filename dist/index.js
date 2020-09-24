@@ -23,6 +23,12 @@ Object.defineProperty(exports, "Profile", {
     return _Profile.default;
   }
 });
+Object.defineProperty(exports, "Can", {
+  enumerable: true,
+  get: function get() {
+    return _Can.default;
+  }
+});
 Object.defineProperty(exports, "AuthContext", {
   enumerable: true,
   get: function get() {
@@ -47,6 +53,8 @@ var _AuthProvider = _interopRequireDefault(require("./components/AuthProvider"))
 var _AuthenticationMonitor = _interopRequireDefault(require("./components/AuthenticationMonitor"));
 
 var _Profile = _interopRequireDefault(require("./components/Profile"));
+
+var _Can = _interopRequireDefault(require("./components/Can"));
 
 var _AuthContext = _interopRequireDefault(require("./context/AuthContext"));
 
