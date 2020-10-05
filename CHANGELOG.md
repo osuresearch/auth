@@ -8,7 +8,7 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 2. MINOR version when you add functionality in a backwards-compatible manner, and
 3. PATCH version when you make backwards-compatible bug fixes.
 
-# 2.0.0 (Unreleased)
+# 2.0.0 (10-05-2020)
 
 __Backwards Breaking Changes:__
 
