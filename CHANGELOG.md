@@ -69,7 +69,7 @@ __New Features:__
 * Added `can(action: string, on?: IHasPolicies)` to the `useIdentity` hook to test against user permissions and contextual policies.
 * Added `<Can>` component to wrap around the aforementioned function.
     * Note that policies are **not** supported for the logged in user if using a `JsonApi` driver in AuthProvider. 
-    * `JsonApi` does support usage for permission checks: `<Can do="foo.some-action">`
+    * `JsonApi` does support usage for permission checks via `<Can do="foo.some-action">` as long as your `/api/user` endpoint has an `attributes.permissions` field containing an array of allowed RBAC permissions for the logged in user.
 * Added `<SimpleSignOutButton />` if you want a sign out button for an app to meet audit compliance without having to use the full `<Profile>` component.
 
 
