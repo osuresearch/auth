@@ -134,7 +134,7 @@ class GraphQLDriver implements IDriver
 }
 
 export default function GraphQL(
-    endpoint: string = `${basepath()}/api/graphql`
+    endpoint: string = `${basepath()}/api/graphql/`
 ) {
     return new GraphQLDriver(endpoint);
 }

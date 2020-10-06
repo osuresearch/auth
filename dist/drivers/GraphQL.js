@@ -197,6 +197,6 @@ var GraphQLDriver = /*#__PURE__*/function () {
 }();
 
 function GraphQL() {
-  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "".concat((0, _utility.basepath)(), "/api/graphql");
+  var endpoint = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "".concat((0, _utility.basepath)(), "/api/graphql/");
   return new GraphQLDriver(endpoint);
 }
