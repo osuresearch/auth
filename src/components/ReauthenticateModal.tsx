@@ -8,14 +8,8 @@ import { basepath } from '../internal/utility';
 
 export interface Props {
     /**
-     * If true, the component will not display a reauth modal and will instead
-     * just redirect the user back to the front page of the app.
-     */
-    reloadOnLogout?: boolean;
-    
-    /**
      * Popup URL for reauthenticating the user.
-     * 
+     *
      * Defaults to /api/login on your app.
      */
     loginUrl?: string;
@@ -23,12 +17,11 @@ export interface Props {
 
 /**
  * Modal that appears and blocks user action when when the user is no longer authenticated.
- * 
+ *
  * The user has the ability to log back into the application via a popup window
  * to avoid losing any unsaved work (This behavior can be disabled via `reloadOnLogout`)
  */
-const AuthenticationMonitor: React.FC<Props> = ({ 
-    reloadOnLogout = true,
+const ReauthenticateModal: React.FC<Props> = ({
     loginUrl = `${basepath()}/api/login`
 }) => {
     const { state, verifyLogin } = useIdentity();
@@ -39,26 +32,20 @@ const AuthenticationMonitor: React.FC<Props> = ({
     // This will fire a verifyLogin() that will close the modal once they
     // have logged back into the application.
     useEffect(() => {
-        console.debug('[AuthenticationMonitor] Effect', state);
+        console.debug('[ReauthenticateModal] Effect', state);
 
         if (state === ConnectionState.NOT_LOGGED_IN) {
-            // Component is configured not to prompt for login, just redirect them.
-            if (reloadOnLogout) {
-                window.location.href = basepath();
-                return;
-            }
-
             setShowModal(true);
             verifyLogin().then(() => setShowModal(false));
         } else {
             setShowModal(false);
         }
-    }, [state, reloadOnLogout, verifyLogin]);
+    }, [state, verifyLogin]);
 
     // When the loginWindow popup is open, monitor the status on
     // an interval. Once it's closed, clear our reference to it.
     useEffect(() => {
-        console.debug('[AuthenticationMonitor] Window ref changed', loginWindow);
+        console.debug('[ReauthenticateModal] Window ref changed', loginWindow);
         const handle = setInterval(() => {
             if (loginWindow && loginWindow.closed) {
                 setLoginWindow(undefined);
@@ -95,7 +82,7 @@ const AuthenticationMonitor: React.FC<Props> = ({
                 <p>Your session has expired and you have been logged out.</p>
 
                 <p>
-                    To avoid losing any unsaved work, click the <strong>Login</strong> button 
+                    To avoid losing any unsaved work, click the <strong>Login</strong> button
                     below to log back into the application.
                 </p>
             </div>
@@ -112,11 +99,11 @@ const AuthenticationMonitor: React.FC<Props> = ({
 
                     {!isLoginWindowOpen &&
                         <span>Login</span>
-                    } 
+                    }
                 </button>
             </div>
         </Modal>
     );
 }
 
-export default AuthenticationMonitor;
+export default ReauthenticateModal;

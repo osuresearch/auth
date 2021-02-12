@@ -1,19 +1,18 @@
 
 import AuthProvider from './components/AuthProvider';
-import AuthenticationMonitor from './components/AuthenticationMonitor';
+import ReauthenticateModal from './components/ReauthenticateModal';
 import Profile from './components/Profile';
-import Can from './components/Can';
 import AuthContext from './context/AuthContext';
 import useIdentity from './hooks/useIdentity';
 import useEmulation from './hooks/useEmulation';
+import GraphQL from './drivers/GraphQL';
 import { IDriver, IHasPolicies } from './types';
 
 export {
     // Components
     AuthProvider,
-    AuthenticationMonitor,
+    ReauthenticateModal,
     Profile,
-    Can,
 
     // Context
     AuthContext,
@@ -21,7 +20,11 @@ export {
     // Hooks
     useIdentity,
     useEmulation,
-};
+
+    // Drivers
+    GraphQL,
+    // JsonApi
+}
 
 export type {
     // Interfaces
