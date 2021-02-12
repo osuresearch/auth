@@ -26,12 +26,19 @@ var GraphQLDriver = /*#__PURE__*/function () {
     (0, _classCallCheck2.default)(this, GraphQLDriver);
     this.endpoint = endpoint;
   }
+  /**
+   * @throws {Error}              If a network error occurs (such as a CORS error)
+   *
+   * @returns {DriverResponse}    Response with user information or error information
+   *                              if the server's response payload is invalid.
+   */
+
 
   (0, _createClass2.default)(GraphQLDriver, [{
     key: "refreshIdentity",
     value: function () {
       var _refreshIdentity = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var res, _yield$res$json, data, response, identity;
+        var res, _yield$res$json, data, response, user;
 
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
@@ -47,46 +54,62 @@ var GraphQLDriver = /*#__PURE__*/function () {
                     'Content-Type': 'application/json'
                   },
                   body: JSON.stringify({
-                    query: "\n                {\n                    me {\n                        id\n                        username\n                        email\n                        firstName\n                        permissions\n                        policies\n                        emulation {\n                            active\n                            allowed\n                        }\n                    }\n                }\n            "
+                    query: "\n                {\n                    me {\n                        id\n                        username\n                        email\n                        name\n                        permissions\n                        policies\n                        emulation {\n                            active\n                            allowed\n                        }\n                    }\n                }\n            "
                   })
                 });
 
               case 2:
                 res = _context.sent;
-                _context.next = 5;
+                _context.prev = 3;
+                _context.next = 6;
                 return res.json();
 
-              case 5:
+              case 6:
                 _yield$res$json = _context.sent;
                 data = _yield$res$json.data;
-                console.debug(data); // Ensure the payload is not malformed
 
                 if (!(typeof data === 'undefined' || typeof data.me === 'undefined')) {
                   _context.next = 10;
                   break;
                 }
 
-                throw new Error("Malformed API response: ".concat(JSON.stringify(data)));
+                throw new Error();
 
               case 10:
                 response = data.me;
-                identity = {
+                user = {
                   id: response.id,
-                  name: response.firstName,
+                  name: response.name,
                   username: response.username,
                   email: response.email,
                   permissions: response.permissions,
                   policies: response.policies,
                   emulation: response.emulation
-                };
-                return _context.abrupt("return", [_types.ConnectionState.LOGGED_IN, identity]);
+                }; // If it parsed correctly, pass the identity forward
 
-              case 13:
+                return _context.abrupt("return", {
+                  state: _types.ConnectionState.LOGGED_IN,
+                  user: user,
+                  error: undefined
+                });
+
+              case 15:
+                _context.prev = 15;
+                _context.t0 = _context["catch"](3);
+                console.error('[auth]- GraphQL Driver Error:', _context.t0); // Any errors will be caught as a parsing issue from the API.
+
+                return _context.abrupt("return", {
+                  state: _types.ConnectionState.API_ERROR,
+                  user: undefined,
+                  error: 'The server did not provide valid user information'
+                });
+
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[3, 15]]);
       }));
 
       function refreshIdentity() {

@@ -16,6 +16,6 @@ function getMockIdentity() {
       allowed: true
     },
     permissions: ['emulate', 'foo.bar', 'fizz.buzz'],
-    policies: ['foo', 'fizz']
+    policies: ['fooPolicy', 'barPolicy']
   };
 }

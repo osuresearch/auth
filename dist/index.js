@@ -11,22 +11,16 @@ Object.defineProperty(exports, "AuthProvider", {
     return _AuthProvider.default;
   }
 });
-Object.defineProperty(exports, "AuthenticationMonitor", {
+Object.defineProperty(exports, "ReauthenticateModal", {
   enumerable: true,
   get: function get() {
-    return _AuthenticationMonitor.default;
+    return _ReauthenticateModal.default;
   }
 });
 Object.defineProperty(exports, "Profile", {
   enumerable: true,
   get: function get() {
     return _Profile.default;
-  }
-});
-Object.defineProperty(exports, "Can", {
-  enumerable: true,
-  get: function get() {
-    return _Can.default;
   }
 });
 Object.defineProperty(exports, "AuthContext", {
@@ -47,19 +41,25 @@ Object.defineProperty(exports, "useEmulation", {
     return _useEmulation.default;
   }
 });
+Object.defineProperty(exports, "GraphQL", {
+  enumerable: true,
+  get: function get() {
+    return _GraphQL.default;
+  }
+});
 
 var _AuthProvider = _interopRequireDefault(require("./components/AuthProvider"));
 
-var _AuthenticationMonitor = _interopRequireDefault(require("./components/AuthenticationMonitor"));
+var _ReauthenticateModal = _interopRequireDefault(require("./components/ReauthenticateModal"));
 
 var _Profile = _interopRequireDefault(require("./components/Profile"));
-
-var _Can = _interopRequireDefault(require("./components/Can"));
 
 var _AuthContext = _interopRequireDefault(require("./context/AuthContext"));
 
 var _useIdentity = _interopRequireDefault(require("./hooks/useIdentity"));
 
 var _useEmulation = _interopRequireDefault(require("./hooks/useEmulation"));
+
+var _GraphQL = _interopRequireDefault(require("./drivers/GraphQL"));
 
 var _types = require("./types");
