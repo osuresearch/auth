@@ -162,11 +162,19 @@ const AuthProvider: React.FC<Props> = ({
             error,
             permissions: user?.permissions || [],
             can: (action, on) => {
+                // If there's a context target, check that context's policies
                 if (typeof on !== 'undefined') {
                     return on.policies.indexOf(action) >= 0;
                 }
 
-                return user ? user.permissions.indexOf(action) >= 0 : false;
+                // Unauthenticated users have no permissions or policies
+                if (!user) {
+                    return false;
+                }
+
+                // Otherwise, check against the user's permissions and policies
+                return user.permissions.indexOf(action) >= 0
+                    || user.policies.indexOf(action) >= 0;
             },
             logout: () => {
                 setUser(undefined);
