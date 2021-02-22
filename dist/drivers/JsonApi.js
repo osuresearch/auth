@@ -35,7 +35,7 @@ var JsonApiDriver = /*#__PURE__*/function () {
     key: "refreshIdentity",
     value: function () {
       var _refreshIdentity = (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var res, _yield$res$json, data, jsonApiIdentity, identity;
+        var res, _yield$res$json, data, jsonApiIdentity, user;
 
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
@@ -53,44 +53,58 @@ var JsonApiDriver = /*#__PURE__*/function () {
 
               case 2:
                 res = _context.sent;
-                _context.next = 5;
+                _context.prev = 3;
+                _context.next = 6;
                 return res.json();
 
-              case 5:
+              case 6:
                 _yield$res$json = _context.sent;
                 data = _yield$res$json.data;
 
                 if (!(typeof data.attributes === 'undefined' || data.type !== 'User')) {
-                  _context.next = 9;
+                  _context.next = 10;
                   break;
                 }
 
-                throw new Error("Malformed identity API response: ".concat(JSON.stringify(data)));
+                throw new Error();
 
-              case 9:
+              case 10:
                 jsonApiIdentity = data;
-                identity = {
+                user = {
                   id: jsonApiIdentity.id,
-                  // ...jsonApiIdentity.attributes
-                  // Make extractions explicit, otherwise developers may add  
+                  // Make extractions explicit, otherwise developers may add
                   // extra stuff that won't be supported in the future AWS-lands.
-                  // Making migration that much harder. 
+                  // Making migration that much harder.
                   name: jsonApiIdentity.attributes.name,
                   username: jsonApiIdentity.attributes.username,
                   email: jsonApiIdentity.attributes.email,
                   permissions: jsonApiIdentity.attributes.permissions,
-                  emulation: jsonApiIdentity.attributes.emulation,
-                  // Policies are currently not supported by JSON:API.
-                  policies: []
-                };
-                return _context.abrupt("return", [_types.ConnectionState.LOGGED_IN, identity]);
+                  emulation: jsonApiIdentity.attributes.emulation
+                }; // If it parsed correctly, pass the identity forward
 
-              case 12:
+                return _context.abrupt("return", {
+                  state: _types.ConnectionState.LOGGED_IN,
+                  user: user,
+                  error: undefined
+                });
+
+              case 15:
+                _context.prev = 15;
+                _context.t0 = _context["catch"](3);
+                console.error('[auth]- JSON:API Driver Error:', _context.t0); // Any errors will be caught as a parsing issue from the API.
+
+                return _context.abrupt("return", {
+                  state: _types.ConnectionState.API_ERROR,
+                  user: undefined,
+                  error: 'The server did not provide valid user information'
+                });
+
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this);
+        }, _callee, this, [[3, 15]]);
       }));
 
       function refreshIdentity() {

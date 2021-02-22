@@ -3,18 +3,18 @@ export declare enum ConnectionState {
     UNKNOWN = 0,
     /** Connected and still logged in with API server */
     LOGGED_IN = 1,
-    /** Cannot communicate with API server at all */
-    NETWORK_ERROR = 2,
+    /** Can communicate with the API but it is returning an unexpected response */
+    API_ERROR = 2,
+    /** Cannot communicate with API server at all (including unauthenticated requests) */
+    NETWORK_ERROR = 3,
     /** Connected but invalid login session */
-    NOT_LOGGED_IN = 3
+    NOT_LOGGED_IN = 4
 }
-export declare type Permission = string;
-export declare type Policy = string;
 /**
- * Interface for an object that contains one or more attached policies
+ * Interface for an object that contains one or more attached policies (contextual permissions)
  */
 export interface IHasPolicies {
-    policies: Policy[];
+    policies: string[];
 }
 /**
  * Identity information
@@ -32,14 +32,18 @@ export interface Identity {
         active: boolean;
         allowed: boolean;
     };
-    permissions: Permission[];
-    policies: Policy[];
+    permissions: string[];
 }
+export declare type DriverResponse = {
+    state: ConnectionState;
+    user?: Identity;
+    error?: string;
+};
 /**
  * Interface for the translation layer between the backend API and frontend models.
  */
 export interface IDriver {
-    refreshIdentity(): Promise<[ConnectionState, Identity | undefined]>;
+    refreshIdentity(): Promise<DriverResponse>;
     emulate(id: string): Promise<void>;
     clearEmulation(): Promise<void>;
 }

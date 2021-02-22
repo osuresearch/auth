@@ -2,30 +2,29 @@
 /** Enum representing our current connection to the server. */
 export enum ConnectionState {
     UNKNOWN,
-    
+
     /** Connected and still logged in with API server */
     LOGGED_IN,
 
-    /** Cannot communicate with API server at all */
+    /** Can communicate with the API but it is returning an unexpected response */
+    API_ERROR,
+
+    /** Cannot communicate with API server at all (including unauthenticated requests) */
     NETWORK_ERROR,
 
     /** Connected but invalid login session */
     NOT_LOGGED_IN
 };
 
-export type Permission = string;
-
-export type Policy = string;
-
 /**
- * Interface for an object that contains one or more attached policies
+ * Interface for an object that contains one or more attached policies (contextual permissions)
  */
 export interface IHasPolicies {
-    policies: Policy[];
+    policies: string[];
 }
 
 /**
- * Identity information 
+ * Identity information
  */
 export interface Identity {
     /** Unique OSU ID */
@@ -33,7 +32,7 @@ export interface Identity {
 
     /** Name.# */
     username: string;
-    
+
     /** Primary email address */
     email: string;
 
@@ -45,16 +44,20 @@ export interface Identity {
         allowed: boolean;
     }
 
-    permissions: Permission[];
-
-    policies: Policy[];
+    permissions: string[];
 };
+
+export type DriverResponse = {
+    state: ConnectionState
+    user?: Identity
+    error?: string
+}
 
 /**
  * Interface for the translation layer between the backend API and frontend models.
  */
 export interface IDriver {
-    refreshIdentity(): Promise<[ConnectionState, Identity|undefined]>;
+    refreshIdentity(): Promise<DriverResponse>;
     emulate(id: string): Promise<void>;
     clearEmulation(): Promise<void>;
 };

@@ -24,15 +24,13 @@ var _utility = require("../internal/utility");
 ;
 /**
  * Modal that appears and blocks user action when when the user is no longer authenticated.
- * 
+ *
  * The user has the ability to log back into the application via a popup window
  * to avoid losing any unsaved work (This behavior can be disabled via `reloadOnLogout`)
  */
 
-var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
-  var _ref$reloadOnLogout = _ref.reloadOnLogout,
-      reloadOnLogout = _ref$reloadOnLogout === void 0 ? true : _ref$reloadOnLogout,
-      _ref$loginUrl = _ref.loginUrl,
+var ReauthenticateModal = function ReauthenticateModal(_ref) {
+  var _ref$loginUrl = _ref.loginUrl,
       loginUrl = _ref$loginUrl === void 0 ? "".concat((0, _utility.basepath)(), "/api/login") : _ref$loginUrl;
 
   var _useIdentity = (0, _useIdentity2.default)(),
@@ -53,15 +51,9 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
 
 
   (0, _react.useEffect)(function () {
-    console.debug('[AuthenticationMonitor] Effect', state);
+    console.debug('[ReauthenticateModal] Effect', state);
 
     if (state === _types.ConnectionState.NOT_LOGGED_IN) {
-      // Component is configured not to prompt for login, just redirect them.
-      if (reloadOnLogout) {
-        window.location.href = (0, _utility.basepath)();
-        return;
-      }
-
       setShowModal(true);
       verifyLogin().then(function () {
         return setShowModal(false);
@@ -69,11 +61,11 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
     } else {
       setShowModal(false);
     }
-  }, [state, reloadOnLogout, verifyLogin]); // When the loginWindow popup is open, monitor the status on
+  }, [state, verifyLogin]); // When the loginWindow popup is open, monitor the status on
   // an interval. Once it's closed, clear our reference to it.
 
   (0, _react.useEffect)(function () {
-    console.debug('[AuthenticationMonitor] Window ref changed', loginWindow);
+    console.debug('[ReauthenticateModal] Window ref changed', loginWindow);
     var handle = setInterval(function () {
       if (loginWindow && loginWindow.closed) {
         setLoginWindow(undefined);
@@ -115,5 +107,5 @@ var AuthenticationMonitor = function AuthenticationMonitor(_ref) {
   }), "\xA0 Waiting for login..."), !isLoginWindowOpen && /*#__PURE__*/_react.default.createElement("span", null, "Login"))));
 };
 
-var _default = AuthenticationMonitor;
+var _default = ReauthenticateModal;
 exports.default = _default;

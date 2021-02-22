@@ -1,16 +1,15 @@
 
 import { basepath } from '../internal/utility';
-import { IDriver, ConnectionState, Identity, Permission, Policy } from '../types';
+import { IDriver, ConnectionState, Identity, DriverResponse } from '../types';
 
 interface GraphQLAuthResponse {
     me: {
         id: string;
         username: string;
         email: string;
-        firstName: string;
+        name: string;
 
-        permissions: Permission[];
-        policies: Policy[];
+        permissions: string[];
 
         emulation: {
             active: boolean;
@@ -27,9 +26,13 @@ class GraphQLDriver implements IDriver
         this.endpoint = endpoint;
     }
 
-    public async refreshIdentity(): Promise<[ConnectionState, Identity]> {
-        // COULD use Apollo here, but there's not much point in it.
-        // We don't want any sort of caching / "smart" stuff here.
+    /**
+     * @throws {Error}              If a network error occurs (such as a CORS error)
+     *
+     * @returns {DriverResponse}    Response with user information or error information
+     *                              if the server's response payload is invalid.
+     */
+    public async refreshIdentity(): Promise<DriverResponse> {
         const res = await fetch(this.endpoint, {
             method: 'POST',
             cache: 'no-cache',
@@ -44,7 +47,7 @@ class GraphQLDriver implements IDriver
                         id
                         username
                         email
-                        firstName
+                        name
                         permissions
                         policies
                         emulation {
@@ -56,29 +59,43 @@ class GraphQLDriver implements IDriver
             `})
         });
 
-        const { data } = await res.json();
+        // Try to parse out user data from the response payload.
+        try {
+            const { data } = await res.json();
 
-        console.debug(data);
+            // Ensure the payload is not malformed
+            if (typeof data === 'undefined' || typeof data.me === 'undefined') {
+                throw new Error();
+            }
 
-        // Ensure the payload is not malformed
-        if (typeof data === 'undefined' || typeof data.me === 'undefined') {
-            throw new Error(`Malformed API response: ${JSON.stringify(data)}`);
+            const response = (data as GraphQLAuthResponse).me;
+            const user: Identity = {
+                id: response.id,
+                name: response.name,
+                username: response.username,
+                email: response.email,
+                permissions: response.permissions,
+                emulation: response.emulation
+            };
+
+            // If it parsed correctly, pass the identity forward
+            return {
+                state: ConnectionState.LOGGED_IN,
+                user,
+                error: undefined
+            };
+        } catch (e) {
+            console.error('[auth]- GraphQL Driver Error:', e);
+
+            // Any errors will be caught as a parsing issue from the API.
+            return {
+                state: ConnectionState.API_ERROR,
+                user: undefined,
+                error: 'The server did not provide valid user information'
+            }
         }
-
-        const response = (data as GraphQLAuthResponse).me;
-        const identity: Identity = {
-            id: response.id,
-            name: response.firstName,
-            username: response.username,
-            email: response.email,
-            permissions: response.permissions,
-            policies: response.policies,
-            emulation: response.emulation
-        };
-
-        return [ConnectionState.LOGGED_IN, identity];
     }
-    
+
     public async emulate(id: string): Promise<void> {
         const res = await fetch(this.endpoint, {
             method: 'POST',
@@ -96,7 +113,7 @@ class GraphQLDriver implements IDriver
                             username
                         }
                     }
-                `, 
+                `,
                 variables: {
                     id
                 }
@@ -105,9 +122,9 @@ class GraphQLDriver implements IDriver
 
         const { data } = await res.json();
 
-        // do a thing.
+        // TODO: Parse the response for errors.
     }
-    
+
     public async clearEmulation(): Promise<void> {
         const res = await fetch(this.endpoint, {
             method: 'POST',
@@ -130,6 +147,8 @@ class GraphQLDriver implements IDriver
         });
 
         const { data } = await res.json();
+
+        // TODO: Parse the response for errors.
     }
 }
 

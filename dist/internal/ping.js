@@ -15,7 +15,7 @@ var _types = require("../types");
 
 /**
  * Check our connection state and get updated IdM information, if possible.
- * 
+ *
  * @return {Promise} Current connection state and updated IdM information, if connected
  */
 function ping(_x, _x2) {
@@ -41,12 +41,14 @@ function _ping() {
           case 8:
             _context.prev = 8;
             _context.t0 = _context["catch"](0);
-            console.error('[ping] Not logged in:', _context.t0);
+            // Potential network error - fall through to doing a more conclusive test.
+            console.error('[ping] Driver error:', _context.t0);
 
           case 11:
             _context.prev = 11;
-            console.debug('[ping] HEAD', publicTestUrl); // If a 200 response from the public url (or even a 404), 
-            // the server is still reachable, we're just not authenticated
+            console.debug('[ping] HEAD', publicTestUrl); // If a 200 response from the public url (or even a 404),
+            // the server is still reachable, we're just getting network errors from auth
+            // (thus potentially a CORS error against our authentication provider)
 
             _context.next = 15;
             return fetch(publicTestUrl, {
@@ -57,7 +59,11 @@ function _ping() {
             });
 
           case 15:
-            return _context.abrupt("return", [_types.ConnectionState.NOT_LOGGED_IN, undefined]);
+            return _context.abrupt("return", {
+              state: _types.ConnectionState.NOT_LOGGED_IN,
+              user: undefined,
+              error: 'Could not retrieve user information - session may have been expired.'
+            });
 
           case 18:
             _context.prev = 18;
@@ -65,7 +71,11 @@ function _ping() {
             console.error('[ping] Cannot reach public URL:', _context.t1);
 
           case 21:
-            return _context.abrupt("return", [_types.ConnectionState.NETWORK_ERROR, undefined]);
+            return _context.abrupt("return", {
+              state: _types.ConnectionState.NETWORK_ERROR,
+              user: undefined,
+              error: 'Network error while trying to refresh user information.'
+            });
 
           case 22:
           case "end":

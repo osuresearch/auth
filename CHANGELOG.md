@@ -8,6 +8,36 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 2. MINOR version when you add functionality in a backwards-compatible manner, and
 3. PATCH version when you make backwards-compatible bug fixes.
 
+# 3.0.0 (@dev)
+
+__Backwards Breaking Changes:__
+
+* Added drivers to the main export
+  * Replace your imports from `@oris/auth/dist/drivers` to just `@oris/auth`
+* Changed package name to `@ORIS/auth`
+    * Required by GitLab to work with group-level package repositories
+* `<AuthProvider>` - Refactored the logic flow for how it renders children based on auth state.
+  * It will now only render children when the user is authenticated with the server. For authentication errors, or the user has logged out, or the user hasn't fully logged in yet, this will render a full-site replacement content instead of your application's content.
+
+__Bug Fixes:__
+
+* `useIdentity` - Changed `user: Identity | undefined` to `user: Identity`
+    * We can now guarantee that a user exists when content within an `<AuthProvider>` is rendered.
+* `<Can>` - Fixed a number of issues with the underlying logic
+* Fixed an issue where each identity refresh caused a refresh of the whole application's content.
+  * Now uses a deep comparison of the identity to determine if it should update states or not.
+
+__New Features:__
+
+* Added export of `<SimpleSignOutButton />`
+    * This is for apps that do not need sophisticated authentication management but still need to comply to audit's requirements of having a log out button visible on all pages. Use this in place of `<Profile />` in your app's navbar.
+* Added a new `ConnectionState.API_ERROR` state for when the API is reachable but throwing an invalid response (developer error)
+* Added better error messages as to why the driver failed to keep the user synced (network error, backend API error, etc)
+* Added a "logged out" screen to be displayed when Shibboleth times out the user's session.
+  * Previously this was an automatic refresh of the application which caused a number of issues with the Shibboleth reauthentication process not kicking in properly so apps would be caught in an infinite refresh loop.
+* Added instructions on how to test SSO timeout behaviour locally to the README
+
+
 # 2.0.1 (10-06-2020)
 
 __Bug Fixes:__
@@ -42,7 +72,7 @@ By default, the `JsonApi` driver will use `/app-name/api/user` and `/app-name/ap
 
 ```jsx
 <AuthProvider driver={JsonApi(
-    '/my/path/to/api/user', 
+    '/my/path/to/api/user',
     '/my/path/to/api/emulate'
 )}>
     ...
@@ -68,7 +98,7 @@ __New Features:__
 * Added support for GraphQL
 * Added `can(action: string, on?: IHasPolicies)` to the `useIdentity` hook to test against user permissions and contextual policies.
 * Added `<Can>` component to wrap around the aforementioned function.
-    * Note that policies are **not** supported for the logged in user if using a `JsonApi` driver in AuthProvider. 
+    * Note that policies are **not** supported for the logged in user if using a `JsonApi` driver in AuthProvider.
     * `JsonApi` does support usage for permission checks via `<Can do="foo.some-action">` as long as your `/api/user` endpoint has an `attributes.permissions` field containing an array of allowed RBAC permissions for the logged in user.
 * Added `<SimpleSignOutButton />` if you want a sign out button for an app to meet audit compliance without having to use the full `<Profile>` component.
 

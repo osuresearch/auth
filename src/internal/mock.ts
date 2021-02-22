@@ -11,7 +11,6 @@ export function getMockIdentity(): Identity {
             active: false,
             allowed: true
         },
-        permissions: ['emulate', 'foo.bar', 'fizz.buzz'],
-        policies: ['foo', 'fizz'],
+        permissions: ['emulate', 'foo.bar', 'fizz.buzz']
     };
 }

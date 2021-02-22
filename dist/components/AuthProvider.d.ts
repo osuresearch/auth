@@ -18,6 +18,21 @@ export interface Props {
      * Defaults to the Shibboleth SSO logout URL.
      */
     logoutUrl?: string;
+    /**
+     * Should the authentication service replace the application content
+     * with a "you have been logged out" screen when the user's session
+     * has timed out (e.g. via a Shibboleth timeout).
+     *
+     * Defaults to true. If set to false, the application must be able
+     * to handle situations where `user` and `permissions` from the
+     * `useIdentity()` hook is null - as well as any failures that may
+     * occur when an invalid Shibboleth session is accessing backend APIs
+     * as, in the case of a Shibboleth timeout, these will all fail.
+     *
+     * Unless you really know what you're doing - it is strongly
+     * recommended that you keep this on.
+     */
+    requireAuthentication?: boolean;
 }
 /**
  * Primary provider for authentication information for an application.
