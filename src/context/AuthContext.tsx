@@ -7,7 +7,7 @@ export interface AuthContextState {
     /**
      * Identity information from the API
      */
-    user?: Identity
+    user: Identity
 
     /**
      * Current connection state to the API

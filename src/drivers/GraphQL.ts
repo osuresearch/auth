@@ -4,17 +4,16 @@ import { IDriver, ConnectionState, Identity, DriverResponse } from '../types';
 
 interface GraphQLAuthResponse {
     me: {
-        id: string
-        username: string
-        email: string
-        name: string
+        id: string;
+        username: string;
+        email: string;
+        name: string;
 
-        permissions: string[]
-        policies: string[]
+        permissions: string[];
 
         emulation: {
-            active: boolean
-            allowed: boolean
+            active: boolean;
+            allowed: boolean;
         }
     }
 };
@@ -76,7 +75,6 @@ class GraphQLDriver implements IDriver
                 username: response.username,
                 email: response.email,
                 permissions: response.permissions,
-                policies: response.policies,
                 emulation: response.emulation
             };
 

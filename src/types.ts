@@ -45,7 +45,6 @@ export interface Identity {
     }
 
     permissions: string[];
-    policies: string[];
 };
 
 export type DriverResponse = {

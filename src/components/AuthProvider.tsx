@@ -7,7 +7,7 @@ import { DEFAULT_SSO_LOGOUT_URL } from '../internal/utility';
 import LoggingIn from './LoggingIn';
 import LoggedOut from './LoggedOut';
 import NetworkError from './NetworkError';
-import ApiError from './ApiError';
+import AuthError from './AuthError';
 
 export interface Props {
     /**
@@ -157,24 +157,16 @@ const AuthProvider: React.FC<Props> = ({
     const context = useMemo<AuthContextState>(() => {
         console.debug('[AuthProvider] Re-memoizing context');
         return {
-            user,
+            user: user as Identity,
             state,
             error,
             permissions: user?.permissions || [],
             can: (action, on) => {
-                // If there's a context target, check that context's policies
                 if (typeof on !== 'undefined') {
                     return on.policies.indexOf(action) >= 0;
                 }
 
-                // Unauthenticated users have no permissions or policies
-                if (!user) {
-                    return false;
-                }
-
-                // Otherwise, check against the user's permissions and policies
-                return user.permissions.indexOf(action) >= 0
-                    || user.policies.indexOf(action) >= 0;
+                return user ? user.permissions.indexOf(action) >= 0 : false;
             },
             logout: () => {
                 setUser(undefined);
@@ -227,7 +219,7 @@ const AuthProvider: React.FC<Props> = ({
                 <LoggedOut />
             }
             {state === ConnectionState.API_ERROR &&
-                <ApiError error={error} />
+                <AuthError error={error} />
             }
             {state === ConnectionState.NETWORK_ERROR &&
                 <NetworkError />
