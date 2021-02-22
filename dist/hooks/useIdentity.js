@@ -15,7 +15,13 @@ var _AuthContext = _interopRequireDefault(require("../context/AuthContext"));
  * IdM identity access
  */
 function useIdentity() {
-  return (0, _react.useContext)(_AuthContext.default);
+  var context = (0, _react.useContext)(_AuthContext.default);
+
+  if (typeof context.verifyLogin === 'undefined') {
+    throw new Error('Cannot call `useIdentity` outside an authenticated context. ' + 'Make sure it is only called from within an <AuthProvider>.');
+  }
+
+  return context;
 }
 
 var _default = useIdentity;

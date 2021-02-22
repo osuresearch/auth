@@ -22,7 +22,7 @@ var NetworkError = function NetworkError(_ref) {
     title: "Network Error"
   }, /*#__PURE__*/_react.default.createElement("p", {
     className: "lead"
-  }, "We are unable to communicate with the server. Please refresh the page and try again."), /*#__PURE__*/_react.default.createElement(_ContactUs.default, {
+  }, "We are unable to communicate with the server. Please make sure you are connected to the internet, then refresh the page and try again."), /*#__PURE__*/_react.default.createElement(_ContactUs.default, {
     title: "Network Error",
     error: error
   }));
