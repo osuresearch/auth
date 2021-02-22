@@ -31,7 +31,7 @@ var _LoggedOut = _interopRequireDefault(require("./LoggedOut"));
 
 var _NetworkError = _interopRequireDefault(require("./NetworkError"));
 
-var _ApiError = _interopRequireDefault(require("./ApiError"));
+var _AuthError = _interopRequireDefault(require("./AuthError"));
 
 ;
 /** How frequent to ping the identity endpoint for an update while logged in */
@@ -168,18 +168,11 @@ var AuthProvider = function AuthProvider(_ref) {
       error: error,
       permissions: (user === null || user === void 0 ? void 0 : user.permissions) || [],
       can: function can(action, on) {
-        // If there's a context target, check that context's policies
         if (typeof on !== 'undefined') {
           return on.policies.indexOf(action) >= 0;
-        } // Unauthenticated users have no permissions or policies
+        }
 
-
-        if (!user) {
-          return false;
-        } // Otherwise, check against the user's permissions and policies
-
-
-        return user.permissions.indexOf(action) >= 0 || user.policies.indexOf(action) >= 0;
+        return user ? user.permissions.indexOf(action) >= 0 : false;
       },
       logout: function logout() {
         setUser(undefined);
@@ -239,7 +232,7 @@ var AuthProvider = function AuthProvider(_ref) {
   var canShowAppContent = state === _types.ConnectionState.LOGGED_IN || !requireAuthentication && (state == _types.ConnectionState.NOT_LOGGED_IN || state === _types.ConnectionState.UNKNOWN);
   return /*#__PURE__*/_react.default.createElement(_AuthContext.default.Provider, {
     value: context
-  }, state === _types.ConnectionState.UNKNOWN && requireAuthentication && /*#__PURE__*/_react.default.createElement(_LoggingIn.default, null), state === _types.ConnectionState.NOT_LOGGED_IN && requireAuthentication && /*#__PURE__*/_react.default.createElement(_LoggedOut.default, null), state === _types.ConnectionState.API_ERROR && /*#__PURE__*/_react.default.createElement(_ApiError.default, {
+  }, state === _types.ConnectionState.UNKNOWN && requireAuthentication && /*#__PURE__*/_react.default.createElement(_LoggingIn.default, null), state === _types.ConnectionState.NOT_LOGGED_IN && requireAuthentication && /*#__PURE__*/_react.default.createElement(_LoggedOut.default, null), state === _types.ConnectionState.API_ERROR && /*#__PURE__*/_react.default.createElement(_AuthError.default, {
     error: error
   }), state === _types.ConnectionState.NETWORK_ERROR && /*#__PURE__*/_react.default.createElement(_NetworkError.default, null), canShowAppContent && children);
 };

@@ -1,4 +1,4 @@
-import { IDriver, ConnectionState, Identity } from '../types';
+import { IDriver, DriverResponse } from '../types';
 /**
  * Driver that communicates with a standard JSON:API backend.
  */
@@ -6,7 +6,7 @@ declare class JsonApiDriver implements IDriver {
     private endpoint;
     private emulateEndpoint;
     constructor(endpoint: string, emulateEndpoint: string);
-    refreshIdentity(): Promise<[ConnectionState, Identity]>;
+    refreshIdentity(): Promise<DriverResponse>;
     emulate(id: string): Promise<void>;
     clearEmulation(): Promise<void>;
 }

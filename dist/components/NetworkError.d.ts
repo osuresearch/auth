@@ -1,4 +1,9 @@
 import React from 'react';
-declare const NetworkError: React.FC;
+/**
+ * Display error information when the user cannot connect to anything (even non-authenticated resources)
+ */
+declare const NetworkError: React.FC<{
+    error?: string;
+}>;
 export default NetworkError;
 //# sourceMappingURL=NetworkError.d.ts.map

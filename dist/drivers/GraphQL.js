@@ -83,7 +83,6 @@ var GraphQLDriver = /*#__PURE__*/function () {
                   username: response.username,
                   email: response.email,
                   permissions: response.permissions,
-                  policies: response.policies,
                   emulation: response.emulation
                 }; // If it parsed correctly, pass the identity forward
 

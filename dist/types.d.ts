@@ -33,7 +33,6 @@ export interface Identity {
         allowed: boolean;
     };
     permissions: string[];
-    policies: string[];
 }
 export declare type DriverResponse = {
     state: ConnectionState;

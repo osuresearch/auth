@@ -14,19 +14,20 @@ var _ContactUs = _interopRequireDefault(require("./ContactUs"));
 var _FullPageMessage = _interopRequireDefault(require("./FullPageMessage"));
 
 /**
- * Display error information when the user cannot connect to anything (even non-authenticated resources)
+ * Display error information when the authentication endpoint has an error
+ * (backend issue of some sort, Apache, PHP, SQL, etc etc)
  */
-var NetworkError = function NetworkError(_ref) {
+var AuthError = function AuthError(_ref) {
   var error = _ref.error;
   return /*#__PURE__*/_react.default.createElement(_FullPageMessage.default, {
-    title: "Network Error"
+    title: "Authentication Error"
   }, /*#__PURE__*/_react.default.createElement("p", {
     className: "lead"
-  }, "We are unable to communicate with the server. Please refresh the page and try again."), /*#__PURE__*/_react.default.createElement(_ContactUs.default, {
-    title: "Network Error",
+  }, error), /*#__PURE__*/_react.default.createElement(_ContactUs.default, {
+    title: "Authentication Error",
     error: error
   }));
 };
 
-var _default = NetworkError;
+var _default = AuthError;
 exports.default = _default;
