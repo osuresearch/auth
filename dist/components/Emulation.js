@@ -13,7 +13,7 @@ var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/sli
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _ui = require("@oris/ui");
+var _ui = require("@ORIS/ui");
 
 var _useIdentity2 = _interopRequireDefault(require("../hooks/useIdentity"));
 
@@ -77,7 +77,7 @@ var Emulation = function Emulation(_ref) {
       active = _useEmulation.active,
       allowed = _useEmulation.allowed;
 
-  var history = getEmulationHistory(localStorageKey); // onChange handler for oris/ui Search. 
+  var history = getEmulationHistory(localStorageKey); // onChange handler for oris/ui Search.
 
   var onEmulate = function onEmulate(e) {
     var person = {

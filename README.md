@@ -1,5 +1,5 @@
 
-# @oris/auth
+# @ORIS/auth
 
 React components for authentication and authorization
 
@@ -8,7 +8,7 @@ React components for authentication and authorization
 
 Bootstrap 4 is required for the UI components `AuthenticationMonitor` and `Profile`.
 
-A backend API is required for user session handling. See the identity and emulate endpoints in [ORIS/Template](https://code.osu.edu/ORIS/template/tree/master/api/endpoints) for a supported implementation. 
+A backend API is required for user session handling. See the identity and emulate endpoints in [ORIS/Template](https://code.osu.edu/ORIS/template/tree/master/api/endpoints) for a supported implementation.
 
 
 ## Installation
@@ -23,8 +23,8 @@ npm install git+ssh://git@code.osu.edu:ORIS/auth.git#semver:^2
 Wrap your main app with an `AuthProvider` and add an `AuthenticationMonitor` to automatically handle session expirations:
 
 ```jsx
-import { AuthProvider, AuthenticationMonitor } from '@oris/auth';
-import GraphQL from '@oris/auth/dist/drivers/GraphQL';
+import { AuthProvider, AuthenticationMonitor } from '@ORIS/auth';
+import GraphQL from '@ORIS/auth/dist/drivers/GraphQL';
 
 function App() {
     return (
@@ -44,7 +44,7 @@ function App() {
 The `useIdentity` hook can then be used to provide logged in user information and the `<Can>` component can test for permissions:
 
 ```jsx
-import { useIdentity, Can } from '@oris/auth';
+import { useIdentity, Can } from '@ORIS/auth';
 
 function MyComponent() {
     const { user } = useIdentity();
@@ -69,7 +69,7 @@ For more comprehensive examples, see the wiki.
 
 ## Known Issues
 
-### CRA / Webpack Compatibility 
+### CRA / Webpack Compatibility
 
 Your application running under Webpack must be hosted on the same base path as if it were deployed. E.g. `http://localhost:3000/my-app`
 

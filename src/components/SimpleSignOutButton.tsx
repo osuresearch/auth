@@ -1,13 +1,13 @@
 
 import React from 'react';
-import { Icon } from '@oris/ui';
+import { Icon } from '@ORIS/ui';
 
 import { DEFAULT_SSO_LOGOUT_URL } from '../internal/utility';
 
 type Props = {
     /**
      * Where to direct the user when the click the button.
-     * 
+     *
      * By default, this logs them out of Shibboleth as a whole.
      */
     url?: string;

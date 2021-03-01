@@ -8,6 +8,12 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 2. MINOR version when you add functionality in a backwards-compatible manner, and
 3. PATCH version when you make backwards-compatible bug fixes.
 
+# 2.0.2 (2021-03-01)
+
+__Bug Fixes:__
+
+* Fixed compatibility with @ORIS/ui^4.3.2
+
 # 2.0.1 (10-06-2020)
 
 __Bug Fixes:__
@@ -42,7 +48,7 @@ By default, the `JsonApi` driver will use `/app-name/api/user` and `/app-name/ap
 
 ```jsx
 <AuthProvider driver={JsonApi(
-    '/my/path/to/api/user', 
+    '/my/path/to/api/user',
     '/my/path/to/api/emulate'
 )}>
     ...
@@ -68,7 +74,7 @@ __New Features:__
 * Added support for GraphQL
 * Added `can(action: string, on?: IHasPolicies)` to the `useIdentity` hook to test against user permissions and contextual policies.
 * Added `<Can>` component to wrap around the aforementioned function.
-    * Note that policies are **not** supported for the logged in user if using a `JsonApi` driver in AuthProvider. 
+    * Note that policies are **not** supported for the logged in user if using a `JsonApi` driver in AuthProvider.
     * `JsonApi` does support usage for permission checks: `<Can do="foo.some-action">`
 * Added `<SimpleSignOutButton />` if you want a sign out button for an app to meet audit compliance without having to use the full `<Profile>` component.
 
