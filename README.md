@@ -1,5 +1,5 @@
 
-# @oris/auth
+# @ORIS/auth Package
 
 React components for authentication and authorization
 
