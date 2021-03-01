@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 // PersonSearchResult is missing from the index.d.ts file for oris/ui
 // This will eventually be fixed once the UI project moves to Typescript.
 // @ts-ignore
-import { Search, PersonSearchResult } from '@oris/ui';
+import { Search, PersonSearchResult } from '@ORIS/ui';
 
 import useIdentity from '../hooks/useIdentity';
 import useEmulation from '../hooks/useEmulation';
@@ -13,15 +13,15 @@ import Modal from '../internal/Modal';
 export interface Props {
     /**
      * API endpoint for looking up possible users to emulate.
-     * 
-     * Defaults to the ORIS API to provide all users. May be 
+     *
+     * Defaults to the ORIS API to provide all users. May be
      * overridden if there's only a subset of whitelisted users
      * for a particular application.
      */
     lookupEndpoint?: string;
-    
+
     /**
-     * Key used for storing emulation history locally for 
+     * Key used for storing emulation history locally for
      * quick access to previously emulated users.
      */
     localStorageKey?: string;
@@ -76,10 +76,10 @@ const Emulation: React.FC<Props> = ({
 
     const { user } = useIdentity();
     const { emulate, active, allowed } = useEmulation();
-    
+
     const history = getEmulationHistory(localStorageKey);
 
-    // onChange handler for oris/ui Search. 
+    // onChange handler for oris/ui Search.
     const onEmulate = (e: any) => {
         const person = {
             id: e.target.value.key,
@@ -105,8 +105,8 @@ const Emulation: React.FC<Props> = ({
             Emulate
         </button>
 
-        <Modal title="Emulate" 
-            isOpen={showModal} 
+        <Modal title="Emulate"
+            isOpen={showModal}
             onRequestClose={() => setShowModal(false)}
         >
             <div className="modal-body">

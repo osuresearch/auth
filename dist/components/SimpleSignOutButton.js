@@ -9,7 +9,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _ui = require("@oris/ui");
+var _ui = require("@ORIS/ui");
 
 var _utility = require("../internal/utility");
 

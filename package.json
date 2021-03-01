@@ -36,6 +36,7 @@
     "react-router-dom": ">=5.0.1"
   },
   "devDependencies": {
+    "@ORIS/ui": "git+ssh://git@code.osu.edu:ORIS/ui.git#semver:^4",
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/plugin-transform-runtime": "^7.7.6",
@@ -44,7 +45,6 @@
     "@babel/preset-react": "^7.7.4",
     "@babel/preset-typescript": "^7.7.7",
     "@babel/register": "^7.7.7",
-    "@oris/ui": "git+ssh://git@code.osu.edu:ORIS/ui.git#semver:^4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
@@ -53,7 +53,6 @@
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "acorn": "^6.4.0",
-    "node-sass": "^4.13.0",
     "npm-run-all": "^4.1.5",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
