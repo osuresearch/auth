@@ -8,14 +8,14 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 2. MINOR version when you add functionality in a backwards-compatible manner, and
 3. PATCH version when you make backwards-compatible bug fixes.
 
-# 3.0.0 (@dev)
+# 3.0.0 (2021-03-01)
 
 __Backwards Breaking Changes:__
 
-* Added drivers to the main export
-  * Replace your imports from `@oris/auth/dist/drivers` to just `@oris/auth`
 * Changed package name to `@ORIS/auth`
     * Required by GitLab to work with group-level package repositories
+* Added drivers to the main export
+  * Replace your imports from `@ORIS/auth/dist/drivers` to just `@ORIS/auth`
 * `<AuthProvider>` - Refactored the logic flow for how it renders children based on auth state.
   * It will now only render children when the user is authenticated with the server. For authentication errors, or the user has logged out, or the user hasn't fully logged in yet, this will render a full-site replacement content instead of your application's content.
 
@@ -57,7 +57,7 @@ The `identityEndpoint` prop has been replaced with a required `driver` prop.
 For applications that use JSON:API - you must import the JsonApi driver and use it as an argument to the provider:
 
 ```jsx
-import JsonApi from '@oris/auth/dist/drivers/JsonApi';
+import JsonApi from '@ORIS/auth/dist/drivers/JsonApi';
 
 function App() {
     return (
@@ -82,7 +82,7 @@ By default, the `JsonApi` driver will use `/app-name/api/user` and `/app-name/ap
 A `GraphQL` driver is included for applications using [ORIS\GraphQL](https://code.osu.edu/oris/graphql).
 
 ```jsx
-import GraphQL from '@oris/auth/dist/drivers/GraphQL';
+import GraphQL from '@ORIS/auth/dist/drivers/GraphQL';
 
 function App() {
     return (
