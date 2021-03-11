@@ -1,9 +1,9 @@
 {
   "name": "@ORIS/auth",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "React components for authentication and authorization",
   "author": "Chase McManning <mcmanning.1@osu.edu>",
-  "private": true,
+  "license": "MIT",
   "main": "dist/index.js",
   "files": [
     "dist"
