@@ -1,5 +1,6 @@
-
 # @ORIS/auth Package
+
+[![pipeline status](https://code.osu.edu/ORIS/auth/badges/master/pipeline.svg)](https://code.osu.edu/ORIS/auth/-/commits/master) 
 
 React components for authentication and authorization
 
