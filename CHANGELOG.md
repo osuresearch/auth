@@ -8,6 +8,21 @@ Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a 
 2. MINOR version when you add functionality in a backwards-compatible manner, and
 3. PATCH version when you make backwards-compatible bug fixes.
 
+# 3.1.0 (2021-03-30)
+
+__Bug Fixes:__
+
+* `GraphQL` Driver - Fixed reporting of errors during authentication.
+    * `AuthError` will now report the first error message from GraphQL back to the user if available.
+
+
+# 3.0.1 (2021-03-11)
+
+__Internal Changes:__
+
+* Added `.gitlab-ci.yml` to run automatic deployments to GitLab's NPM Package repository.
+
+
 # 3.0.0 (2021-03-01)
 
 __Backwards Breaking Changes:__
