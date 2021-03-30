@@ -68,7 +68,7 @@ var GraphQLDriver = /*#__PURE__*/function () {
                 _yield$res$json = _context.sent;
                 data = _yield$res$json.data;
 
-                if (!(typeof data === 'undefined' || typeof data.me === 'undefined')) {
+                if (!(typeof data === 'undefined')) {
                   _context.next = 10;
                   break;
                 }
@@ -76,6 +76,18 @@ var GraphQLDriver = /*#__PURE__*/function () {
                 throw new Error();
 
               case 10:
+                if (!Array.isArray(data.errors)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                return _context.abrupt("return", {
+                  state: _types.ConnectionState.API_ERROR,
+                  user: undefined,
+                  error: data.errors[0].message
+                });
+
+              case 12:
                 response = data.me;
                 user = {
                   id: response.id,
@@ -92,8 +104,8 @@ var GraphQLDriver = /*#__PURE__*/function () {
                   error: undefined
                 });
 
-              case 15:
-                _context.prev = 15;
+              case 17:
+                _context.prev = 17;
                 _context.t0 = _context["catch"](3);
                 console.error('[auth]- GraphQL Driver Error:', _context.t0); // Any errors will be caught as a parsing issue from the API.
 
@@ -103,12 +115,12 @@ var GraphQLDriver = /*#__PURE__*/function () {
                   error: 'The server did not provide valid user information'
                 });
 
-              case 19:
+              case 21:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[3, 15]]);
+        }, _callee, this, [[3, 17]]);
       }));
 
       function refreshIdentity() {

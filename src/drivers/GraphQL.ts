@@ -61,11 +61,19 @@ class GraphQLDriver implements IDriver
 
         // Try to parse out user data from the response payload.
         try {
+            // Ensure the payload is JSON
             const { data } = await res.json();
-
-            // Ensure the payload is not malformed
-            if (typeof data === 'undefined' || typeof data.me === 'undefined') {
+            if (typeof data === 'undefined') {
                 throw new Error();
+            }
+
+            // Check for any GraphQL errors
+            if (Array.isArray(data.errors)) {
+                return {
+                    state: ConnectionState.API_ERROR,
+                    user: undefined,
+                    error: data.errors[0].message
+                };
             }
 
             const response = (data as GraphQLAuthResponse).me;
