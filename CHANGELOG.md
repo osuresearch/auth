@@ -33,6 +33,8 @@ __Backwards Breaking Changes:__
   * Replace your imports from `@ORIS/auth/dist/drivers` to just `@ORIS/auth`
 * `<AuthProvider>` - Refactored the logic flow for how it renders children based on auth state.
   * It will now only render children when the user is authenticated with the server. For authentication errors, or the user has logged out, or the user hasn't fully logged in yet, this will render a full-site replacement content instead of your application's content.
+* Removed `<AuthenticationMonitor>` component.
+  * Monitoring behaviour is now part of the main `<AuthProvider>`. 
 
 __Bug Fixes:__
 
