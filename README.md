@@ -13,7 +13,7 @@ A backend API is required for user session handling. See the identity and emulat
 ## Installation
 
 ```
-npm i --save git+ssh://git@code.osu.edu:ORIS/auth.git#semver:^4 --production
+npm i --save git+ssh://git@code.osu.edu:ORIS/auth.git#semver:^3 --production
 ```
 
 
