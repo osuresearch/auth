@@ -1,12 +1,3 @@
-# Change Log
-
-Current unresolved issues can be found and reported on [YouTrack](https://ordevsvc01.rf.ohio-state.edu/youtrack/issues?q=%23oris\auth+%23Unresolved+)
-
-Versions follow [Semantic Versioning](https://semver.org/) guidelines - given a version number MAJOR.MINOR.PATCH:
-
-1. MAJOR version when you make incompatible API changes,
-2. MINOR version when you add functionality in a backwards-compatible manner, and
-3. PATCH version when you make backwards-compatible bug fixes.
 
 # 3.1.0 (2021-03-30)
 
@@ -34,7 +25,7 @@ __Backwards Breaking Changes:__
 * `<AuthProvider>` - Refactored the logic flow for how it renders children based on auth state.
   * It will now only render children when the user is authenticated with the server. For authentication errors, or the user has logged out, or the user hasn't fully logged in yet, this will render a full-site replacement content instead of your application's content.
 * Removed `<AuthenticationMonitor>` component.
-  * Monitoring behaviour is now part of the main `<AuthProvider>`. 
+  * Monitoring behaviour is now part of the main `<AuthProvider>`.
 
 __Bug Fixes:__
 
