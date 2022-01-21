@@ -4,13 +4,13 @@
   "description": "React components for authentication and authorization",
   "author": "Chase McManning <mcmanning.1@osu.edu>",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "files": [
-    "dist"
+    "build"
   ],
   "scripts": {
-    "build:components": "npx babel ./src --out-dir ./dist --extensions \".tsx,.ts\"",
-    "build:ts-declarations": "npx tsc --declaration --outDir ./dist --emitDeclarationOnly --declarationMap || echo tsc done, possibly with ignored errors.",
+    "build:components": "npx babel ./src --out-dir ./build --extensions \".tsx,.ts\"",
+    "build:ts-declarations": "npx tsc --declaration --outDir ./build --emitDeclarationOnly --declarationMap || echo tsc done, possibly with ignored errors.",
     "build": "npm-run-all --parallel build:components build:ts-declarations",
     "test": "react-scripts test"
   },
@@ -36,7 +36,7 @@
     "react-router-dom": ">=5.0.1"
   },
   "devDependencies": {
-    "@ORIS/ui": "git+ssh://git@code.osu.edu:ORIS/ui.git#semver:^4",
+    "@ORIS/ui": "^4",
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/plugin-transform-runtime": "^7.7.6",
