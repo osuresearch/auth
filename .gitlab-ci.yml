@@ -4,6 +4,6 @@ include:
     file: '/NPM-Package.gitlab-ci.yml'
 
 variables:
-  COMPLIANCE: 'S2'
+  COMPLIANCE: 'S1'
   # We haven't written any test automation (yet)
   NEEDS_NPM_TEST: 'false'

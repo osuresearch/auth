@@ -1,19 +1,23 @@
 # @ORIS/auth Package
 
-[![pipeline status](https://code.osu.edu/ORIS/auth/badges/master/pipeline.svg)](https://code.osu.edu/ORIS/auth/-/commits/master)
+![npm@latest](https://img.shields.io/npm/v/@osuresearch/ui/latest)
 
 React components for authentication and authorization
 
 
 ## Requirements
 
-A backend API is required for user session handling. See the identity and emulate endpoints in [ORIS/Template](https://code.osu.edu/ORIS/template/tree/master/api/endpoints) for a supported implementation.
+A backend API is required for user session handling.
+
+For internal developers, these APIs are already provided with our GraphQL and REST application templates.
+
+GitHub documentation is a work in progress.
 
 
 ## Installation
 
 ```
-npm i --save @ORIS/auth
+npm install @osuresearch/auth
 ```
 
 ## Usage
@@ -25,7 +29,7 @@ import {
     AuthProvider,
     GraphQL,
     Profile
-} from '@ORIS/auth';
+} from '@osuresearch/auth';
 
 function App() {
     return (
@@ -80,7 +84,15 @@ RedirectMatch ^ "https://webauth.service.ohio-state.edu/idp/profile/SAML2/Redire
 4. Remove the RedirectMatch to re-enable the application (would be equivalent to a user going through Shibboleth authentication again)
 
 
-## Contributing
+## Changelog
 
-See CONTRIBUTING.md
+The changelog can be found on the [Releases page](https://github.com/osuresearch/auth/releases).
+
+Changes prior to `3.2` can be found in [CHANGELOG.md](CHANGELOG.md).
+
+## Authors and license
+
+[Chase McManning](https://github.com/McManning) and [contributors](https://github.com/osuresearch/auth/graphs/contributors).
+
+MIT License, see the included [LICENSE](LICENSE.md) file.
 

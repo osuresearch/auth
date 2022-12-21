@@ -1,4 +1,6 @@
 
+Changes after 3.1.0 can be found on the [Releases page](https://github.com/osuresearch/auth/releases).
+
 # 3.1.0 (2021-03-30)
 
 __Bug Fixes:__
