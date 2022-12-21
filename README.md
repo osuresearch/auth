@@ -1,6 +1,6 @@
-# @ORIS/auth Package
+# 🛡 OSU Research Auth
 
-![npm@latest](https://img.shields.io/npm/v/@osuresearch/ui/latest)
+[![npm@latest](https://img.shields.io/npm/v/@osuresearch/auth/latest)](https://www.npmjs.com/package/@osuresearch/auth)
 
 React components for authentication and authorization
 
