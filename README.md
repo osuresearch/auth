@@ -48,7 +48,7 @@ function App() {
 The `useIdentity` hook can then be used to provide logged in user information and the `<Can>` component can test for permissions:
 
 ```jsx
-import { useIdentity, Can } from '@ORIS/auth';
+import { useIdentity, Can } from '@osuresearch/auth';
 
 function MyComponent() {
     const { user } = useIdentity();
@@ -80,7 +80,7 @@ Since local development does not have Shibboleth SSO installed - you need to per
 RedirectMatch ^ "https://webauth.service.ohio-state.edu/idp/profile/SAML2/Redirect/SSO?SAMLRequest=BadRequest"
 ```
 
-3. Wait for your application to log the user out (can take upwards of 5 minutes). Meanwhile - you can interact with other requests to identify places where they will fail and add logic to handle it gracefully (as all API requests will give you failures during the window between the forced logout and @ORIS/auth checking authentication state).
+3. Wait for your application to log the user out (can take upwards of 5 minutes). Meanwhile - you can interact with other requests to identify places where they will fail and add logic to handle it gracefully (as all API requests will give you failures during the window between the forced logout and @osuresearch/auth checking authentication state).
 4. Remove the RedirectMatch to re-enable the application (would be equivalent to a user going through Shibboleth authentication again)
 
 

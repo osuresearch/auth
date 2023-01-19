@@ -35,8 +35,8 @@ export type Props = {
 /**
  * Wrapper around Bootstrap 4 Modals.
  * 
- * This is an updated non-compatible version of the @oris/ui Modal
- * that is more React friendly. Eventually moved into @oris/ui.
+ * This is an updated non-compatible version of the @osuresearch/ui Modal
+ * that is more React friendly. Eventually moved into @osuresearch/ui.
  */
 const Modal: React.FC<Props> = ({
     onRequestClose,

@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
 
-// PersonSearchResult is missing from the index.d.ts file for oris/ui
+// PersonSearchResult is missing from the index.d.ts file for osuresearch/ui
 // This will eventually be fixed once the UI project moves to Typescript.
 // @ts-ignore
-import { Search, PersonSearchResult } from '@ORIS/ui';
+import { Search, PersonSearchResult } from '@osuresearch/ui';
 
 import useIdentity from '../hooks/useIdentity';
 import useEmulation from '../hooks/useEmulation';

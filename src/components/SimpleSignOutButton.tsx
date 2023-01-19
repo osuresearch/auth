@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Icon } from '@ORIS/ui';
+import { Icon } from '@osuresearch/ui';
 
 import { DEFAULT_SSO_LOGOUT_URL } from '../internal/utility';
 
